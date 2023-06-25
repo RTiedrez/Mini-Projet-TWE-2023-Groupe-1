@@ -334,7 +334,7 @@ INSERT INTO `workout_exercise` (`id`, `idWorkout`, `idExercise`, `duration`, `po
 --
 DROP TABLE IF EXISTS `v_groups`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_groups`  AS SELECT `g`.`id` AS `id`, `g`.`idCoach` AS `idCoach`, `g`.`name` AS `name`, `u`.`login` AS `login` FROM (`groups` `g` join `users` `u` on((`g`.`idCoach` = `u`.`id`))) ;
+CREATE VIEW `v_groups` AS SELECT `g`.`id` AS `id`, `g`.`idCoach` AS `idCoach`, `g`.`name` AS `name`, `u`.`login` AS `login` FROM (`groups` `g` join `users` `u` on((`g`.`idCoach` = `u`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -343,7 +343,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_performances`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_performances`  AS SELECT `p`.`id` AS `id`, `p`.`idUser` AS `idUser`, `p`.`idWorkout` AS `idWorkout`, `p`.`idExercice` AS `idExercice`, `p`.`nbRep` AS `nbRep`, `p`.`date` AS `date`, `w`.`name` AS `nomWorkout`, `e`.`title` AS `nomExercise`, `u`.`login` AS `nomUser` FROM (((`performances` `p` join `workouts` `w` on((`p`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`p`.`idExercice` = `e`.`id`))) join `users` `u` on((`p`.`idUser` = `u`.`id`))) ;
+CREATE VIEW `v_performances`  AS SELECT `p`.`id` AS `id`, `p`.`idUser` AS `idUser`, `p`.`idWorkout` AS `idWorkout`, `p`.`idExercice` AS `idExercice`, `p`.`nbRep` AS `nbRep`, `p`.`date` AS `date`, `w`.`name` AS `nomWorkout`, `e`.`title` AS `nomExercise`, `u`.`login` AS `nomUser` FROM (((`performances` `p` join `workouts` `w` on((`p`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`p`.`idExercice` = `e`.`id`))) join `users` `u` on((`p`.`idUser` = `u`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -352,7 +352,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_requests`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_requests`  AS SELECT `r`.`id` AS `id`, `r`.`idUser` AS `idUser`, `r`.`idCoach` AS `idCoach`, `u`.`login` AS `nomUser`, `uu`.`login` AS `nomCoach` FROM ((`requests` `r` join `users` `u` on((`r`.`idUser` = `u`.`id`))) join `users` `uu` on((`r`.`idCoach` = `uu`.`id`))) ;
+CREATE VIEW `v_requests`  AS SELECT `r`.`id` AS `id`, `r`.`idUser` AS `idUser`, `r`.`idCoach` AS `idCoach`, `u`.`login` AS `nomUser`, `uu`.`login` AS `nomCoach` FROM ((`requests` `r` join `users` `u` on((`r`.`idUser` = `u`.`id`))) join `users` `uu` on((`r`.`idCoach` = `uu`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -361,7 +361,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_user_group`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_user_group`  AS SELECT `ug`.`id` AS `id`, `ug`.`idUser` AS `idUser`, `ug`.`idGroup` AS `idGroup`, `u`.`login` AS `login`, `g`.`name` AS `nomGroupe` FROM ((`user_group` `ug` join `users` `u` on((`ug`.`idUser` = `u`.`id`))) join `groups` `g` on((`ug`.`idGroup` = `g`.`id`))) ;
+CREATE VIEW `v_user_group`  AS SELECT `ug`.`id` AS `id`, `ug`.`idUser` AS `idUser`, `ug`.`idGroup` AS `idGroup`, `u`.`login` AS `login`, `g`.`name` AS `nomGroupe` FROM ((`user_group` `ug` join `users` `u` on((`ug`.`idUser` = `u`.`id`))) join `groups` `g` on((`ug`.`idGroup` = `g`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -370,7 +370,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_workouts`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_workouts`  AS SELECT `w`.`id` AS `id`, `w`.`idCoach` AS `idCoach`, `w`.`name` AS `name`, `u`.`login` AS `login` FROM (`workouts` `w` join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
+CREATE VIEW `v_workouts`  AS SELECT `w`.`id` AS `id`, `w`.`idCoach` AS `idCoach`, `w`.`name` AS `name`, `u`.`login` AS `login` FROM (`workouts` `w` join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -379,7 +379,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_workout_exercise`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_workout_exercise`  AS SELECT `we`.`id` AS `id`, `we`.`idWorkout` AS `idWorkout`, `we`.`idExercise` AS `idExercise`, `we`.`duration` AS `duration`, `we`.`position` AS `position`, `w`.`name` AS `name`, `e`.`title` AS `title`, `e`.`description` AS `description`, `e`.`file` AS `file`, `u`.`id` AS `idCoach`, `u`.`login` AS `login` FROM (((`workout_exercise` `we` join `workouts` `w` on((`we`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`we`.`idExercise` = `e`.`id`))) join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
+CREATE VIEW `v_workout_exercise`  AS SELECT `we`.`id` AS `id`, `we`.`idWorkout` AS `idWorkout`, `we`.`idExercise` AS `idExercise`, `we`.`duration` AS `duration`, `we`.`position` AS `position`, `w`.`name` AS `name`, `e`.`title` AS `title`, `e`.`description` AS `description`, `e`.`file` AS `file`, `u`.`id` AS `idCoach`, `u`.`login` AS `login` FROM (((`workout_exercise` `we` join `workouts` `w` on((`we`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`we`.`idExercise` = `e`.`id`))) join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
 
 --
 -- Indexes for dumped tables
