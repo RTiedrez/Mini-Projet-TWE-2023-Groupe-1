@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 25, 2023 at 04:56 PM
+-- Generation Time: Jun 25, 2023 at 06:16 PM
 -- Server version: 8.0.33-0ubuntu0.22.04.2
 -- PHP Version: 8.1.2-1ubuntu2.11
 
@@ -49,7 +49,9 @@ INSERT INTO `exercises` (`id`, `title`, `description`, `file`) VALUES
 (8, 'Jog', NULL, NULL),
 (9, 'Alternating dumbbell biceps curl', 'The alternating dumbbell biceps curls develop size and strength of the biceps and forearms. The alternating of each arm eliminates any muscular imbalances on each side.', NULL),
 (10, 'Side plank', 'This exercise builds strength by fighting against gravity, which adds and extra balance challenge.', NULL),
-(11, 'Jump rope', 'Jumping rope is a full body conditioning drill that develops foot work, speed and agility. This exercise also improves cardiovascular endurance and coordination.', NULL);
+(11, 'Jump rope', 'Jumping rope is a full body conditioning drill that develops foot work, speed and agility. This exercise also improves cardiovascular endurance and coordination.', NULL),
+(12, 'Crunch', 'The cable crunch is a core strengthening exercise that targets the entire abdominal region. The exercise also improves stability in the lower back and hips.', NULL),
+(13, 'Single leg deadlift with barbell', 'The single-leg deadlift with barbell builds leg and back strength while improving core stability, balance, and coordination.', NULL);
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,8 @@ CREATE TABLE `user_group` (
 
 INSERT INTO `user_group` (`id`, `idUser`, `idGroup`) VALUES
 (1, 6, 1),
-(2, 5, 1);
+(2, 5, 1),
+(3, 7, 3);
 
 -- --------------------------------------------------------
 
@@ -325,7 +328,10 @@ INSERT INTO `workout_exercise` (`id`, `idWorkout`, `idExercise`, `duration`, `po
 (3, 1, 11, '00:10:00', 2),
 (4, 1, 10, '00:05:00', 3),
 (5, 2, 8, '00:10:00', 0),
-(6, 2, 11, '00:10:00', 1);
+(6, 2, 11, '00:10:00', 1),
+(7, 3, 12, '00:05:00', 0),
+(8, 3, 2, '00:05:00', 1),
+(9, 3, 13, '00:10:00', 2);
 
 -- --------------------------------------------------------
 
@@ -461,7 +467,7 @@ ALTER TABLE `workout_exercise`
 -- AUTO_INCREMENT for table `exercises`
 --
 ALTER TABLE `exercises`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -497,7 +503,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_group`
 --
 ALTER TABLE `user_group`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `workouts`
@@ -509,7 +515,7 @@ ALTER TABLE `workouts`
 -- AUTO_INCREMENT for table `workout_exercise`
 --
 ALTER TABLE `workout_exercise`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
