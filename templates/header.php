@@ -30,9 +30,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 <div id="banniere">
 
-<div id="logo">
+<!-- <div id="logo">
 <img src="ressources/ec-lille.png" alt="Logo de Centrale Lille"/>
-</div>
+</div> -->
 
 <a href="index.php?view=home">Home</a>
 <a href="index.php?view=user">User</a>
@@ -42,7 +42,5 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 if (!valider("connecte","SESSION"))
 	echo "<a href=\"index.php?view=signin\">Se connecter</a>";
 ?>
-
-<h1 id="stitre"> Chat TWE 2023 </h1>
 
 </div>
