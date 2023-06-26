@@ -4,11 +4,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 	<style type="text/css">
-		body {
-			font-family: 'Bebas Neue';
-			background-image: url("https://i.pinimg.com/originals/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
-		}
-
 		#corps {
 			background-color: rgba(0,0,0,.8);
 			border-radius: 17px;
@@ -20,6 +15,7 @@
 			width: fit-content;
 			margin-left: auto;
 			margin-right: auto;
+			font-family: 'Bebas Neue';
 		}
 
 		.red{

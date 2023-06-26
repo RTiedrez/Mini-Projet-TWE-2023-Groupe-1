@@ -40,7 +40,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <?php
 // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 if (!valider("connecte","SESSION"))
-	echo "<a href=\"index.php?view=signin\">Se connecter</a>";
+	echo "<a href=\"index.php?view=signin\">SIGN IN</a>";
+	echo " ";
+	echo "<a href=\"index.php?view=signup\">SIGN UP</a>";
 ?>
 
 </div>
