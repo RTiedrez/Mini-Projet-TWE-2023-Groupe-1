@@ -1,196 +1,94 @@
 <?php
 
-/*
-Dans ce fichier, on définit diverses fonctions permettant de récupérer des données utiles pour notre TP d'identification. Deux parties sont à compléter, en suivant les indications données dans le support de TP
-*/
+include_once("maLibSQL.pdo.php");
 
-
-/********* EXERCICE 2 : prise en main de la base de données *********/
-
-
-// inclure ici la librairie faciliant les requêtes SQL (en veillant à interdire les inclusions multiples)
-
-include_once("maLibSQL.pdo.php"); // include_once vérifie que la library n'a pas déjà été include (à privilégier)
-
-function listerUtilisateurs($classe = "both")
-{
-	// Cette fonction liste les utilisateurs de la base de données 
-	// et renvoie un tableau d'enregistrements. 
-	// Chaque enregistrement est un tableau associatif contenant les champs 
-	// id,pseudo,blacklist,couleur
-
-	// Lorsque la variable $classe vaut "both", elle renvoie tous les utilisateurs
-	// Lorsqu'elle vaut "bl", elle ne renvoie que les utilisateurs blacklistés
-	// Lorsqu'elle vaut "nbl", elle ne renvoie que les utilisateurs non blacklistés
-
-	$SQL="SELECT id,pseudo,blacklist,admin,couleur from users";
-	if ($classe == "bl") $SQL .= " WHERE blacklist=1"; // /!\ .= en PHP !!!!!
-	if ($classe == "nbl") $SQL .= " WHERE blacklist=0";
-
-	// die($SQL); // Bonne pratique
-	return parcoursRs(SQLSelect($SQL));
-
-}
-
-function interdireUtilisateur($idUser)
-{
-	// cette fonction affecte le booléen "blacklist" à vrai
-	$SQL="UPDATE users SET blacklist=1 WHERE id=$idUser";
-	SQLUpdate($SQL);
-
-	// Attention aux injections SQL !!!! Solutions :
-	// 1) On encadre les arguments client avec des apostrophes
-	// 2) On banalise les caractères spéciaux SQL cf. fonction proteger et addslashes
-	// Ex : $SQL = "UPDATE users SET blacklist=1 WHERE id='3';drop table users;''"; // Injection SQL
-	// Les pros utilisent des requêtes préparées
-}
-
-function autoriserUtilisateur($idUser)
-{
-	// cette fonction affecte le booléen "blacklist" à faux
-	$SQL="UPDATE users SET blacklist=0 WHERE id=$idUser";
-	SQLUpdate($SQL);
-
-}
-
-/********* EXERCICE 4 *********/
-
-function verifUserBdd($login,$passe)
-{
-	// Vérifie l'identité d'un utilisateur 
-	// dont les identifiants sont passes en paramètre
-	// renvoie faux si user inconnu
-	// renvoie l'id de l'utilisateur si succès
-
-	$SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe'";
-
-	// $tab=parcoursRs(SQLSelect($SQL));
-	// if (count($tab) != 0) return $tab[0]["id"] else return false;
-	// return $tab[ø]["id"];
-
-	return SQLGetChamp($SQL);
-
-	// On utilise SQLGetChamp
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
-}
-
-function isAdmin($idUser)
-{
-	// vérifie si l'utilisateur est un administrateur
-	$SQL="SELECT admin FROM users WHERE id='$idUser'";
-	return SQLGetChamp($SQL);
-
-}
-
-/********* EXERCICE 5 *********/
-
-function listerConversations($mode="tout")
-{
-	// Liste toutes les conversations ($mode="tout")
-	// OU uniquement celles actives  ($mode="actives"), ou inactives  ($mode="inactives")
-	switch($mode) {
-		case "tout":
-			$SQL="SELECT * FROM conversations";
-		break;
-		case "actives":
-			$SQL="SELECT * FROM conversations WHERE active=1";
-		break;
-		case "inactives":
-			$SQL="SELECT * FROM conversations WHERE active=0";
-		break;
+function showEntry($tabUsers, $class, $key) {
+	echo "<div id=entry>";
+	foreach($tabUsers as $value) {
+		echo "<div class=item>";
+		echo "<p class=$class>";
+		echo $value[$key];
+		echo "</p>";
+		if ($class == "requester") {
+			echo '<div class=images>';
+			echo '<img class="accept" src="ressources/done.png"/>';
+			echo '<img class="decline" src="ressources/close.png"/>';
+			echo '</div>';
+		}
+		echo "</div>";
 	}
-
-
-	return parcoursRs(SQLSelect($SQL));
+	if (($class == "group") || ($class == "exercise") || ($class == "workout")) {
+		echo "<div class=item-add>";
+		echo "<p class=$class>Add $class</p>";
+		echo "</div>";
+	}
+	echo "</div>";
 }
 
-function archiverConversation($idConversation)
-{
-	// rend une conversation inactive
-	$SQL = "UPDATE conversations SET active='0' WHERE id='$idConversation'"; 
-	SQLUpdate($SQL); 
+function showExercise($tab) {
+	echo "<div id=exercise>";
+	foreach($tab as $exercise) {
+		$t = $exercise["title"];
+		$d = $exercise["description"];
+		echo "<p>Exercice : $t</p><hr/>";
+		echo "<p>Description : $d</p><hr/>";
+	}
+	echo "<div class=item-add>";
+	echo "<p class=exercise>Edit exercise</p>";
+	echo "</div>";
+	echo "</div>";
 }
 
-function reactiverConversation($idConversation)
-{	
-	// rend une conversation active
-	$SQL = "UPDATE conversations SET active='1' WHERE id='$idConversation'"; 
-	SQLUpdate($SQL); 
+function showWorkout($tab) {
+	echo "<div id=workout>";
+	foreach($tab as $exercise) {
+		$t = $exercise["title"];
+		$d = $exercise["duration"];
+		echo "<p>Exercise : $t Durée : $d</p><hr/>";
+	}
+	echo "<div class=item-add>";
+	echo "<p class=workout>Edit workout</p>";
+	echo "</div>";
+	echo "</div>";
 }
 
-function creerConversation($theme)
-{
-	// crée une nouvelle conversation et renvoie son identifiant
-	$SQL = "INSERT INTO conversations(theme) VALUES('$theme')"; 
-	return SQLInsert($SQL);
+function showGroup($tab) {
+	echo "<div id=group>";
+	foreach($tab as $exercise) {
+		$l = $exercise["login"];
+		echo "<p>Membre : $l</p><hr/>";
+	}
+	echo "<div class=item-add>";
+	echo "<p class=group>Edit group</p>";
+	echo "</div>";
+	echo "</div>";
 }
 
-function supprimerConversation($idConv)
-{
-	// supprime une conversation et ses messages
-	$SQL = "DELETE FROM messages WHERE idConversation='$idConv'";
-	SQLDelete($SQL);
-
-	$SQL = "DELETE FROM conversations WHERE id='$idConv'";
-	SQLDelete($SQL);
-
-	// NB : on aurait pu aussi demander à mysql de supprimer automatiquement
-	// les messages lorsqu'une conversation est supprimée, 
-	// en déclarant idConversation comme clé étrangère vers le champ id de la table 
-	// des conversations et en définissant un trigger
+function showEmptyExercise() {
+	echo "<div id=exercise>";
+	echo "<p>Empty exercise</p><hr/>";
+	echo "<div class=item-add>";
+	echo "<p class=exercise>Edit exercise</p>";
+	echo "</div>";
+	echo "</div>";
 }
 
-
-/********* EXERCICE 6 *********/
-
-function enregistrerMessage($idConversation, $idAuteur, $contenu)
-{
-	// Enregistre un message dans la base en encodant les caractères spéciaux HTML : <, > et & 
-	// pour interdire les messages HTML
-	$contenu = htmlspecialchars($contenu); // Protection contre les injections JS
-
-	$SQL = "INSERT INTO messages(contenu, idAuteur,idConversation) VALUES('$contenu','$idAuteur','$idConversation')";
-
-	return SQLInsert($SQL); 
-	
-}
-function listerMessages($idConv,$format="asso")
-{
-	// Liste les messages de cette conversation
-	// Champs à extraire : contenu, auteur, couleur 
-	// en ne renvoyant pas les utilisateurs blacklistés
-	$SQL = "SELECT m.contenu, u.pseudo, u.couleur FROM messages m INNER JOIN users u ON m.idAuteur=u.id WHERE idConversation='$idConv' AND u.blacklist=0 ORDER BY m.id ASC"; 
-
-	$tabR = parcoursRs(SQLSelect($SQL));
-	
-	if ($format == "asso")
-		return $tabR;
-	else return json_encode($tabR);  
-
+function showEmptyWorkout() {
+	echo "<div id=workout>";
+	echo "<p>Empty workout</p><hr/>";
+	echo "<div class=item-add>";
+	echo "<p class=workout>Edit workout</p>";
+	echo "</div>";
+	echo "</div>";
 }
 
-function listerMessagesFromIndex($idConv,$index)
-{
-	// Liste les messages de cette conversation, 
-	// dont l'id est superieur à l'identifiant passé
-	// Champs à extraire : contenu, auteur, couleur 
-	// en ne renvoyant pas les utilisateurs blacklistés
-
-}
-
-function getConversation($idConv)
-{	
-	// Récupère les données de la conversation (theme, active)
-	$SQL = "SELECT theme, active FROM conversations WHERE id='$idConv'";
-	$listConversations = parcoursRs(SQLSelect($SQL));
-
-	// Attention : parcoursRS nous renvoie un tableau contenant potentiellement PLUSIEURS CONVERSATIONS
-	// Il faut renvoyer uniquement la première case de ce tableau, c'est à dire la case 0 
-	// OU false si la conversation n'existe pas
-	 
-	if (count($listConversations) == 0) return false;
-	else return $listConversations[0];
+function showEmptyGroup() {
+	echo "<div id=group>";
+	echo "<p>Empty group</p><hr/>";
+	echo "<div class=item-add>";
+	echo "<p class=group>Edit group</p>";
+	echo "</div>";
+	echo "</div>";
 }
 
 ?>
