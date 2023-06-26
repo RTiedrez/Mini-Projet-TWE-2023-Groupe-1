@@ -49,7 +49,14 @@ function verifUser($login,$password)
  */
 function securiser($urlBad,$urlGood=false)
 {
-
+	if (! valider("connecte","SESSION")) {
+		rediriger($urlBad);
+		die("");
+	}
+	else {
+		if ($urlGood)
+			rediriger($urlGood);
+	}
 }
 
 ?>
