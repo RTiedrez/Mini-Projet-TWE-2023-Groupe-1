@@ -13,10 +13,12 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 <script>
 
+var url = "libs/search_requests.php"
+
 function loadContent() {
 	$('#imgLoad').hide();
 	$.ajax({
-		url: 'libs/searchRequests.php',
+		url: url,
 		method: 'POST',
 		data: {name:"",action:"list"},
 		success: function(result) {
@@ -36,7 +38,7 @@ $(document).ready(function(){
 		var name = $(this).val();
 		
 		$.ajax({
-			url: 'libs/searchRequests.php',
+			url: url,
 			method: 'POST',
 			data: {name:name,action:"list"},
 			success: function(result) {
@@ -52,7 +54,7 @@ $(document).ready(function(){
 		var clickedUser = $(this).closest(".item").find('.requester').text();
 		console.log("Accepte : ", clickedUser);
 		$.ajax({
-			url: 'libs/searchRequests.php',
+			url: url,
 			method: 'POST',
 			data: {name:clickedUser,action:"accept"},
 			success: function(result) {
@@ -66,7 +68,7 @@ $(document).ready(function(){
 		var clickedUser = $(this).closest(".item").find('.requester').text();
 		console.log("Refuse : ", clickedUser);
 		$.ajax({
-			url: 'libs/searchRequests.php',
+			url: url,
 			method: 'POST',
 			data: {name:clickedUser,action:"decline"},
 			success: function(result) {

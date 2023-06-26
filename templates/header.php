@@ -24,25 +24,19 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 </head>
 <!-- **** F I N **** H E A D **** -->
 
+<style>
+#banniere{background-color:red;padding:10px;}
+</style>
 
 <!-- **** B O D Y **** -->
 <body>
 
 <div id="banniere">
 
-<div id="logo">
-<img src="ressources/ec-lille.png" alt="Logo de Centrale Lille"/>
-</div>
-
-<a href="index.php?view=home">Home</a>
-<a href="index.php?view=user">User</a>
-
-<?php
-// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
-if (!valider("connecte","SESSION"))
-	echo "<a href=\"index.php?view=signin\">Se connecter</a>";
-?>
-
-<h1 id="stitre"> Chat TWE 2023 </h1>
+<a href="index.php?view=coach_dashboard">Dashboard</a>
+<a href="index.php?view=coach_exercices">Exercices</a>
+<a href="index.php?view=coach_workouts">Workouts</a>
+<a href="index.php?view=coach_groups">Groups</a>
+<a href="index.php?view=coach_requests">Requests</a>
 
 </div>

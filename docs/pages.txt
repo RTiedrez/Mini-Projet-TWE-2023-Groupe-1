@@ -1,0 +1,14 @@
+dashboard_coach.php
+	tableau de bords, statistiques
+
+exercices.php
+	création d'exercices + liste
+
+workouts_coach.php
+	création de workouts + liste
+
+groups.php
+	création des groupes + liste
+
+requests.php
+	gestion des demandes des users

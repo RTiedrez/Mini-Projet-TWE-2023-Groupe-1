@@ -179,13 +179,20 @@ function parcoursRs($result)
 	$result->setFetchMode(PDO::FETCH_ASSOC);
 	while ($ligne = $result->fetch()) 
 		$tab[]= $ligne;
-
+	
 	return $tab;
 }
 
 
-
-
-
+function parcoursSel($result, $key)
+{
+	$tab = parcoursRs($result);
+	$extract = array();
+	foreach($tab as $t) {
+		array_push($extract, $t[$key]);
+	}
+	return $extract;
+	
+}
 
 ?>

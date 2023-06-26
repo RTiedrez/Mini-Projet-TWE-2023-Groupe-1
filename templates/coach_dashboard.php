@@ -13,10 +13,12 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 <script>
 
+var url = "libs/search_dashboard.php"
+
 function loadContent() {
 	$('#imgLoad').hide();
 	$.ajax({
-		url: 'libs/searchUser.php',
+		url: url,
 		method: 'POST',
 		data: {name:""},
 		success: function(result) {
@@ -36,7 +38,7 @@ $(document).ready(function(){
 		var name = $(this).val();
 		
 		$.ajax({
-			url: 'libs/searchUser.php',
+			url: url,
 			method: 'POST',
 			data: {name:name},
 			success: function(result) {

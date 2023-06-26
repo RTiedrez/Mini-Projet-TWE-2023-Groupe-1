@@ -6,22 +6,22 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	die("");
 }
 
-include_once("libs/maLibSQL.pdo.php");
-include_once("libs/modele.php");
-
 ?>
 
 <!------------------------------------------------------------->
 
 <script src="js/jquery-3.7.0.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 
 <script>
 
+var url = 'libs/search_exercises.php';
+
 function showExercise(name) {
 	$.ajax({
-		url: 'libs/searchExercise.php',
+		url: url,
 		method: 'POST',
-		data: {name:name},
+		data: {action:"exercise",name:name},
 		success: function(result) {
 			if (result != $('#right').html()) {
 				$('#right').html(result);
@@ -30,16 +30,50 @@ function showExercise(name) {
 	});
 }
 
-function updateHeight() {
-	var h = $("#left").outerHeight() + $("h1").outerHeight();
-	$("#content").css("height", h);
+function selected(id) {
+	showExercise($(".item").eq(id).text());
+	$(".item").eq(id).removeClass().addClass("item-selected");
+}
+
+function showExerciseList(id) {
+	$.ajax({
+		url: url,
+		method: 'POST',
+		data: {action:"list"},
+		success: function(result) {
+			if (result != $('#left').html()) {
+				$('#left').html(result);
+			}
+			if (id != null) {
+				selected(id);
+			}
+			else {
+				selected(0);
+			}
+		}
+	});
+}
+
+function loadEditor(name) {
+	$("#left, #right, #editor").toggle();
+	/*
+	$.ajax({
+		url: url,
+		method: 'POST',
+		data: {action:"ExerciseEditor",name:name},
+		success: function(result) {
+			if (result != $('#right').html()) {
+				$('#right').html(result);
+				initDrag();
+			}
+		}
+	});
+	*/
 }
 
 function init() {
-	$("#editor").toggle();
-	showExercise($(".item").first().text());
-	$(".item").first().removeClass().addClass("item-selected");
-	updateHeight();
+	$("#editor").toggle()
+	showExerciseList();
 }
 
 $(document).ready(function(){
@@ -49,19 +83,34 @@ $(document).ready(function(){
 	init();
 	
 	$("#left").on("click", ".item", function() {
-		console.log($(this).text());
 		$(".item-selected").removeClass().addClass("item");
 		$(this).removeClass().addClass("item-selected");
 		var name = $(this).text();
 		showExercise(name);
 	});
 	
-	$("#content").on("click", ".item-add", function() {
-		console.log("Oui chef");
-		$("#left").toggle();
-		$("#right").toggle();
-		$("#editor").toggle();
-		$("h1").html("Edit exercise");
+	
+	// Gérer le passage en mode édition
+	$("#content").on("click", "#left .item-add", function() {
+		$("h1").html("Exercise editor");
+		loadEditor("create-new-exercise");
+	});
+	
+	$("#content").on("click", "#right .item-add", function() {
+		$("h1").html("Exercise editor");
+		loadEditor($(".item-selected").text());
+	});
+	
+	
+	// Gérer le passage en mode affichage
+	$("#content").on("click", "#can", function() {
+		$("h1").html("Exercises");
+		init();
+	});
+	
+	$("#content").on("click", "#val", function() {
+		$("h1").html("Exercises");
+		init();
 	});
 	
 });
@@ -88,6 +137,7 @@ div {
 	margin-top:10px;
 	border-radius:20px;
 	min-height: 50vh;
+	height:100%;
 }
 
 .column {
@@ -97,14 +147,6 @@ div {
 
 .item-selected p {
 	border: solid 3px red;
-}
-
-#exercise {
-	background-color:rgb(200,200,200);
-	color:black;
-	padding:10px;
-	margin:10px;
-	border-radius:10px;
 }
 
 .exercise {
@@ -121,34 +163,22 @@ div {
 	color:white;
 }
 
+#exercise {
+	background-color:rgb(200,200,200);
+	color:black;
+	padding:10px;
+	margin:10px;
+	border-radius:10px;
+}
+
 </style>
 
 <!------------------------------------------------------------->
 
 <div id="content">
-	<h1>My exercises</h1>
-	
-	<div id="left" class="column">
-	<?php
-		$SQL = "SELECT title FROM exercises"; // ajouter idCoach
-		
-		$result = parcoursRs(SQLSelect($SQL));
-
-		if ($result) {
-			echo showEntry($result, "exercise", "title");
-		}
-		else {
-			echo json_encode(false);
-		}
-	?>
-	</div>
-	
+	<h1>Exercises</h1>
+	<div id="editor" class="column">cc</div>
+	<div id="left" class="column"></div>
 	<div id="right" class="column"></div>
 	
-	<div id="editor">
-		<?php
-		
-		?>
-	</div>
-
 </div>

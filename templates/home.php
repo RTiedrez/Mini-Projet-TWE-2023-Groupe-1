@@ -10,8 +10,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 <div id="corps">
 
-<h1>Accueil</h1>
+<h1>Home</h1>
 
-Home
+There is nothing to display here.
 
 </div>
