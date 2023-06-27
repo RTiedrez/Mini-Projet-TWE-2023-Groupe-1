@@ -31,7 +31,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <div id="banniere">
 
 <div id="logo">
-<img src="ressources/ec-lille.png" alt="Logo de Centrale Lille"/>
+<img src="ressources/Logo.png" alt="Logo de Gigachad Workout"/>
 </div>
 
 <a href="index.php?view=home">Home</a>
@@ -40,9 +40,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <?php
 // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 if (!valider("connecte","SESSION"))
-	echo "<a href=\"index.php?view=signin\">Se connecter</a>";
+	echo "<a href=\"index.php?view=signin\">SIGN IN</a>";
+	echo " ";
+	echo "<a href=\"index.php?view=signup\">SIGN UP</a>";
 ?>
-
-<h1 id="stitre"> Chat TWE 2023 </h1>
 
 </div>
