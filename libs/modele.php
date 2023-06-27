@@ -77,7 +77,7 @@ function verifUserBdd($login,$passe)
 
 function isCoach($idUser)
 {
-	// vérifie si l'utilisateur est un administrateur
+	// vérifie si l'utilisateur est un coach
 	$SQL="SELECT isCoach FROM users WHERE id='$idUser'";
 	return SQLGetChamp($SQL);
 
