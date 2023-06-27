@@ -29,7 +29,7 @@ function verifUser($login,$password)
 		$_SESSION["pseudo"]=$login;
 		$_SESSION["idUser"]=$idUser;
 		$_SESSION["heureConnexion"]=date("H:i:s");
-		$_SESSION["isAdmin"]=isAdmin($idUser);
+		$_SESSION["isCoach"]=isCoach($idUser);
 
 		return true;
 
