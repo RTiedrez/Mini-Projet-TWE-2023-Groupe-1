@@ -20,6 +20,17 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <head>	
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
+
+	<!-- Pour colorier le lien correspondant à la page active -->
+	<script src="js/jquery-3.7.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var url = window.location.href;
+			var page = url.split("view=")[1];
+			$("#"+page).addClass("selected");
+		});
+	</script>
+
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<style type="text/css">
@@ -94,18 +105,18 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	<div id="liens">
 
-		<a class="lien" href="index.php?view=home">Accueil</a>
+		<a id="home" class="lien" href="index.php?view=home">Accueil</a>
 		<?php
 		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 		if (valider("connecte","SESSION")) {
 			if (!valider("isCoach","SESSION")) {
-				echo "<a class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
+				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
 			} else {
-				echo "<a class=\"lien\" href=\"index.php?view=coach_dashboard\">Dashboard</a>";
-				echo "<a class=\"lien\" href=\"index.php?view=coach_exercices\">Exercices</a>";
-				echo "<a class=\"lien\" href=\"index.php?view=coach_workouts\">Workouts</a>";
-				echo "<a class=\"lien\" href=\"index.php?view=coach_groups\">Groups</a>";
-				echo "<a class=\"lien\" href=\"index.php?view=coach_requests\">Requests</a>";
+				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
+				echo "<a id=\"coach_exercices\" class=\"lien\" href=\"index.php?view=coach_exercices\">Exercices</a>";
+				echo "<a id=\"coach_workouts\" class=\"lien\" href=\"index.php?view=coach_workouts\">Workouts</a>";
+				echo "<a id=\"coach_groups\" class=\"lien\" href=\"index.php?view=coach_groups\">Groups</a>";
+				echo "<a id=\"coach_requests\" class=\"lien\" href=\"index.php?view=coach_requests\">Requests</a>";
 			}
 		}
 		?>
