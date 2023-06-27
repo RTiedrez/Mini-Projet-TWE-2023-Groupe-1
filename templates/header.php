@@ -37,7 +37,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 </div> -->
 
 <a href="index.php?view=home">Home</a>
-<a href="index.php?view=user">User</a>
 
 <?php
 // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
@@ -46,6 +45,11 @@ if (!valider("connecte","SESSION")) {
 	echo " ";
 	echo "<a href=\"index.php?view=signup\">SIGN UP</a>";
 } else {
+	if($_SESSION['isCoach'])
+		echo "<a href=\"index.php?view=coach\">Coach</a>";
+	else
+		echo "<a href=\"index.php?view=user\">User</a>";
+	echo " ";
 	echo "<a href=\"controleur.php?action=Logout\">Se déconnecter</a>";
 }
 ?>
