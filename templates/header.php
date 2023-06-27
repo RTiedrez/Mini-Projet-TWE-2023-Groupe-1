@@ -21,13 +21,19 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
 
-	<!-- Pour colorier le lien correspondant à la page active -->
 	<script src="js/jquery-3.7.0.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+
+			// Colorier le lien correspondant à la page active 
 			var url = window.location.href;
 			var page = url.split("view=")[1];
 			$("#"+page).addClass("selected");
+
+			$("#menu-image").click(function() {
+				$("#dropdown").toggle();
+			});
+			
 		});
 	</script>
 
@@ -63,6 +69,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			font-family: "BebasNeue";
 			src: url("ressources/fonts/Bebas_Neue/BebasNeue-Regular.ttf");
 		}
+		@font-face {
+			font-family: "AnonymousPro";
+			src: url("ressources/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf");
+		}
 		.selected {
 			color: #FF0000;
 		}
@@ -88,6 +98,33 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			background-color: #FFB3B3;
 			color: #000000;
 		}
+		#menu-image:hover {
+			cursor: pointer;
+		}
+		#menu {
+			position: absolute;
+			right: 20px;
+			top: 24px;
+		}
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			right: -12px;
+			background-color: #D9D9D9;
+			padding: 8px 40px;
+			border-radius: 25px;
+			z-index: 1;
+		}
+		.dropdown-content a {
+			font-family: "AnonymousPro";
+			font-size: 25;
+			font-weight: bold;
+			color: #000000;
+			padding: 10px 12px;
+			text-decoration: none;
+			min-width: 128px;
+			display: block;
+		}
 	</style>
 </head>
 <!-- **** F I N **** H E A D **** -->
@@ -112,7 +149,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			if (!valider("isCoach","SESSION")) {
 				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
 			} else {
-				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
+				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=coach_dashboard\">Dashboard</a>";
 				echo "<a id=\"coach_exercices\" class=\"lien\" href=\"index.php?view=coach_exercices\">Exercices</a>";
 				echo "<a id=\"coach_workouts\" class=\"lien\" href=\"index.php?view=coach_workouts\">Workouts</a>";
 				echo "<a id=\"coach_groups\" class=\"lien\" href=\"index.php?view=coach_groups\">Groups</a>";
@@ -123,13 +160,29 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	</div>
 
 	<div id="signs">
-		<!-- TODO : logo en haut à droite -->
 		<?php
 		if (!valider("connecte","SESSION")) {
 			echo "<a class=\"sign\" id=\"signin\" href=\"index.php?view=signin\">SIGN IN</a>";
 			echo "<a class=\"sign\" id=\"signup\" href=\"index.php?view=signup\">SIGN UP</a>";
 		}
 		?>
+	</div>
+
+	<div id="menu">
+
+			<?php
+			if (valider("connecte","SESSION")) {
+				echo "<img id=\"menu-image\" src=\"ressources/lucas.png\" alt=\"Bouton menu contextuel\"/>";
+				echo "<div id=\"dropdown\" class=\"dropdown-content\">";
+				if (!valider("isCoach","SESSION")) {
+					echo "<a href=\"index.php?view=user\">Dashboard</a>";
+				} else {
+					echo "<a href=\"index.php?view=coach_dashboard\">Dashboard</a>";
+				}
+				echo "<a href=\"controleur.php?action=Logout\">Se Déconnecter</a>";
+				}
+			?>
+		</div>
 	</div>
 
 </div>

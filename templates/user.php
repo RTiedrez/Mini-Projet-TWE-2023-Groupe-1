@@ -16,7 +16,7 @@ include("templates/header.php");
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <div id="dashboard-user">
