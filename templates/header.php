@@ -57,11 +57,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		}
 		@font-face {
 			font-family: "Roboto";
-			src: url("ressources/Roboto/Roboto-Regular.ttf");
+			src: url("ressources/fonts/Roboto/Roboto-Regular.ttf");
 		}
 		@font-face {
 			font-family: "BebasNeue";
-			src: url("ressources/Bebas_Neue/BebasNeue-Regular.ttf");
+			src: url("ressources/fonts/Bebas_Neue/BebasNeue-Regular.ttf");
 		}
 		.selected {
 			color: #FF0000;
