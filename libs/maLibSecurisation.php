@@ -11,7 +11,7 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
 /**
  * Cette fonction vérifie si le login/passe passés en paramètre sont légaux
  * Elle stocke les informations sur la personne dans des variables de session : session_start doit avoir été appelé...
- * Infos à enregistrer : pseudo, idUser, heureConnexion, isAdmin
+ * Infos à enregistrer : pseudo, idUser, heureConnexion, isCoach
  * Elle enregistre l'état de la connexion dans une variable de session "connecte" = true
  * L'heure de connexion doit être stockée au format date("H:i:s") 
  * @pre login et passe ne doivent pas être vides
