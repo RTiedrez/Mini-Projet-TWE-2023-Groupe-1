@@ -17,7 +17,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 var url = 'libs/search_workouts.php';
 
-function showGroup(name) {
+function showWorkout(name) {
 	$.ajax({
 		url: url,
 		method: 'POST',
@@ -31,11 +31,11 @@ function showGroup(name) {
 }
 
 function selected(id) {
-	showGroup($(".item").eq(id).text());
+	showWorkout($(".item").eq(id).text());
 	$(".item").eq(id).removeClass().addClass("item-selected");
 }
 
-function showGroupList(id) {
+function showWorkoutList(id) {
 	$.ajax({
 		url: url,
 		method: 'POST',
@@ -54,7 +54,7 @@ function showGroupList(id) {
 	});
 }
 
-function loadEditor(name) {	
+function loadEditor(name) {
 	$.ajax({
 		url: url,
 		method: 'POST',
@@ -62,7 +62,7 @@ function loadEditor(name) {
 		success: function(result) {
 			console.log(result);
 			r = JSON.parse(result);
-			$('#nameEditor').html(r.nameGroup);
+			$('#nameEditor').html(r.nameWorkout);
 			$('#left-list').html(r.freeUsers);
 			$('#right-list').html(r.workoutUsers);
 		}
@@ -72,7 +72,7 @@ function loadEditor(name) {
 	$("#left, #right").hide();
 }
 
-function addGroup() {
+function addWorkout() {
 	var users = [];
 	var name = $("#editName").val();
 	
@@ -98,7 +98,7 @@ function addGroup() {
 	init();
 }
 
-function delGroup() {
+function delWorkout() {
 	var name = $("#editor").data("name");
 	
 	if (name != "") {
@@ -114,13 +114,20 @@ function delGroup() {
 }
 
 function init() {
-	showGroupList();
+	showWorkoutList();
 	
 	$("#editor").hide()
 	$("#left, #right").show();
 	
-	$("#right-list").sortable({connectWith: "ul"}).disableSelection();
-	$("#left-list").sortable({connectWith: "ul"}).disableSelection();
+	$("#right-list").sortable({revert:true}).disableSelection();
+	/*
+	$(".draggable").each(function() {
+		$(this).draggable({connectToSortable: "#right-list",helper:"clone"}).disableSelection();
+	});
+	*/
+	$("#left-list").on('mouseenter', "p", function() {
+		$(this).draggable({connectToSortable:"#right-list",helper:"clone",revert:"invalid"}).disableSelection();
+	});
 }
 
 $(document).ready(function(){
@@ -133,23 +140,26 @@ $(document).ready(function(){
 		$(".item-selected").removeClass().addClass("item");
 		$(this).removeClass().addClass("item-selected");
 		var name = $(this).text();
-		showGroup(name);
+		showWorkout(name);
 	});
 	
 	
-	// Gérer le passage en mode édition
+	// Gérer le passage en mode ajout
 	$("#content").on("click", "#left .item-add", function() {
 		$("h1").html("Add a workout");
 		$("#editor").data("mode","add");
 		$("#editor").data("name","");
+		$("#del").hide();
 		loadEditor("create-new-workout");
 	});
 	
+	// Gérer le passage en mode édition
 	$("#content").on("click", "#right .item-add", function() {
 		var name = $(".item-selected").text();
 		$("h1").html("Edit a workout");
 		$("#editor").data("mode","edit");
 		$("#editor").data("name",name);
+		$("#del").show();
 		loadEditor($(".item-selected").text());
 	});
 	
@@ -162,12 +172,12 @@ $(document).ready(function(){
 	
 	$("#content").on("click", "#val", function() {
 		$("h1").html("Workout");
-		addGroup();
+		addWorkout();
 	});
 	
 	$("#content").on("click", "#del", function() {
 		$("h1").html("Workout");
-		delGroup();
+		delWorkout();
 	});
 	
 });

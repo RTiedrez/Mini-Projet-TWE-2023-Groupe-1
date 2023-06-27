@@ -11,7 +11,7 @@ if ($action == "list") {
 		
 	$result = parcoursRs(SQLSelect($SQL));
 
-	showEntry($result, "workout", "name");
+	echo showEntry($result, "workout", "name");
 }
 
 if ($action == "workout") {
@@ -21,28 +21,26 @@ if ($action == "workout") {
 
 	$result = parcoursRs(SQLSelect($SQL));
 
-	showWorkout($result);
+	echo showWorkout($result);
 }
 
 
 if ($action == "editor") {
 	$name = $_POST['name'];
 	
-	$result1 = showNameEdit($name);
-	
 	$SQL1 = "SELECT title FROM exercises";
 	
 	if ($name == "create-new-workout") {
 		$result1 = showNameEdit(false);
-		$result3 = showDragList(false);
+		$result3 = showSortList(false);
 	}
 	else {
 		$result1 = showNameEdit($name);
 		$SQL2 = "SELECT title FROM v_workout_exercise WHERE name = \"$name\"";
-		$result3 = showDragList(parcoursSel(SQLSelect($SQL2), "title"));
+		$result3 = showSortList(parcoursSel(SQLSelect($SQL2), "title"));
 	}
 	
-	$result2 = showDragList(parcoursSel(SQLSelect($SQL1), "title"));
+	$result2 = showSortList(parcoursSel(SQLSelect($SQL1), "title"));
 	
 	$result = array("nameWorkout" => $result1, "freeUsers" => $result2, "workoutUsers" => $result3);
 	echo json_encode($result);
@@ -97,7 +95,6 @@ if ($action == "edit") {
 
 if ($action == "add") {
 	$name = $_POST['name'];
-	$users = $_POST['users'];
 	$users = $_POST['users'];
 	
 	// Réupération des ids

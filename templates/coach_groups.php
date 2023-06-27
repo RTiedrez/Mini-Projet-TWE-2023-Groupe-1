@@ -136,19 +136,22 @@ $(document).ready(function(){
 	});
 	
 	
-	// Gérer le passage en mode édition
+	// Gérer le passage en mode ajout
 	$("#content").on("click", "#left .item-add", function() {
 		$("h1").html("Add a group");
 		$("#editor").data("mode","add");
 		$("#editor").data("name","");
+		$("#del").hide();
 		loadEditor("create-new-group");
 	});
 	
+	// Gérer le passage en mode édition
 	$("#content").on("click", "#right .item-add", function() {
 		var name = $(".item-selected").text();
 		$("h1").html("Edit a group");
 		$("#editor").data("mode","edit");
 		$("#editor").data("name",name);
+		$("#del").show();
 		loadEditor($(".item-selected").text());
 	});
 	

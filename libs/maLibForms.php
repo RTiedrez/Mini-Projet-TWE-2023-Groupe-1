@@ -2,7 +2,7 @@
 
 //------------------------ General
 
-function showDragList($tab) {
+function showSortList($tab) {
 	$s = "";
 	if ($tab) {
 		foreach($tab as $t) {
@@ -15,100 +15,129 @@ function showDragList($tab) {
 function showNameEdit($name) {
 	$s = "Edit the name : ";
 	if ($name) {
-		$s .= "<input id=editName value=$name>";
+		$s .= "<input type=text id=editName value=\"$name\">";
 	}
 	else {
-		$s .= "<input id=editName>";
+		$s .= "<input type=text id=editName>";
 	}
 	return $s;
 }
 
 function showEntry($tab, $class, $key) {
-	echo "<div id=entry>";
+	$s = "<div id=entry>";
 	if ($tab) {
 		foreach($tab as $value) {
-			echo "<div class=item>";
-			echo "<p class=$class>$value[$key]</p>";
+			$s .= "<div class=item>";
+			$s .= "<p class=$class>$value[$key]</p>";
 			if ($class == "requester") {
-				echo '<div class=images>';
-				echo '<img class="accept" src="ressources/done.png"/>';
-				echo '<img class="decline" src="ressources/close.png"/>';
-				echo '</div>';
+				$s .= '<div class=images>';
+				$s .= '<img class="accept" src="ressources/done.png"/>';
+				$s .= '<img class="decline" src="ressources/close.png"/>';
+				$s .= '</div>';
 			}
-			echo "</div>";
+			$s .= "</div>";
 		}
 	}
 	else {
-		echo "<p class=empty>The list is empty!</p>";
+		$s .= "<p class=empty>The list is empty!</p>";
 	}
 	if (($class == "group") || ($class == "exercise") || ($class == "workout")) {
-		echo "<div class=item-add>";
-		echo "<p class=$class>Add $class</p>";
-		echo "</div>";
+		$s .= "<div class=item-add>";
+		$s .= "<p class=$class>Add $class</p>";
+		$s .= "</div>";
 	}
-	echo "</div>";
+	$s .= "</div>";
+	return $s;
 }
-
-
 
 //------------------------ Exercises
 
 function showExercise($tab) {
-	echo "<div id=exercise>";
+	$s = "<div id=exercise>";
 	if ($tab) {
 		foreach($tab as $exercise) {
 			$t = $exercise["title"];
 			$d = $exercise["description"];
-			echo "<p>Exercice : $t</p><hr/>";
-			echo "<p>Description : $d</p><hr/>";
+			$s .= "<p>Exercice : $t</p><hr/>";
+			$s .= "<p>Description : $d</p><hr/>";
 		}
 	}
 	else {
-		echo "<p>Empty exercise</p><hr/>";
+		$s .= "<p>Empty exercise</p><hr/>";
 	}
-	echo "<div class=item-add>";
-	echo "<p class=exercise>Edit exercise</p>";
-	echo "</div>";
-	echo "</div>";
+	$s .= "<div class=item-add>";
+	$s .= "<p class=exercise>Edit exercise</p>";
+	$s .= "</div>";
+	$s .= "</div>";
+	return $s;
+}
+
+function showExerciseEditor($tab) {
+	$result = array();
+	
+	$title = "";
+	$desc = "";
+	$file = "";
+	
+	if ($tab) {
+		$title = $tab["title"];
+		$desc = $tab["description"];
+		$file = $tab["file"];
+	}
+	$s = "<input type=text id=editName value=\"$title\"><br/>";
+	$s .= "<textarea id=editDesc>$desc</textarea>";
+	
+	$result["propertyEditor"] = $s;
+	if ($file != "") {
+		$result["currentImg"] = "<img src=\"$file\">";
+	}
+	else {
+		$result["currentImg"] = false;
+	}
+	
+	
+	return $result;
 }
 
 //------------------------ Workout
 
 function showWorkout($tab) {
-	echo "<div id=workout>";
+	$s = "<div id=workout>";
 	if ($tab) {
 		foreach($tab as $workout) {
 			$t = $workout["title"];
 			$d = $workout["duration"];
-			echo "<p>Exercise : $t Durée : $d</p><hr/>";
+			$s .= "<p>Exercise : $t<br/>Durée : $d</p><hr/>";
 		}
 	}
 	else {
-		echo "<p>Empty workout</p><hr/>";
+		$s .= "<p>Empty workout</p><hr/>";
 	}
-	echo "<div class=item-add>";
-	echo "<p class=workout>Edit workout</p>";
-	echo "</div>";
-	echo "</div>";
+	$s .= "<div class=item-add>";
+	$s .= "<p class=workout>Edit workout</p>";
+	$s .= "</div>";
+	$s .= "</div>";
+	return $s;
 }
 
 //------------------------ Group
 
 function showGroup($tab) {
-	echo "<div id=group>";
+	$s = "<div id=group>";
 	if ($tab) {
 		foreach($tab as $group) {
 			$l = $group["login"];
-			echo "<p>Membre : $l</p><hr/>";
+			$s .= "<p>Membre : $l</p><hr/>";
 		}
 	}
 	else {
-		echo "<p>Empty group</p><hr/>";
+		$s .= "<p>Empty group</p><hr/>";
 	}
-	echo "<div class=item-add>";
-	echo "<p class=group>Edit group</p>";
-	echo "</div>";
-	echo "</div>";
+	$s .= "<div class=item-add>";
+	$s .= "<p class=group>Edit group</p>";
+	$s .= "</div>";
+	$s .= "</div>";
+	return $s;
 }
 
 ?>

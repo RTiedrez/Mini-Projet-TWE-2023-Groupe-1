@@ -11,7 +11,7 @@ if ($action == "list") {
 		
 	$result = parcoursRs(SQLSelect($SQL));
 
-	showEntry($result, "group", "name");
+	echo showEntry($result, "group", "name");
 }
 
 if ($action == "group") {
@@ -21,28 +21,26 @@ if ($action == "group") {
 
 	$result = parcoursRs(SQLSelect($SQL));
 
-	showGroup($result);
+	echo showGroup($result);
 }
 
 if ($action == "editor") {
 	$name = $_POST['name'];
 	
-	$result1 = showNameEdit($name);
-	
 	// Récupération partie gauche
 	if ($name == "create-new-group") {
 		$result1 = showNameEdit(false);
 		$SQL1 = "SELECT * FROM users WHERE isCoach = 0";
-		$result3 = showDragList(false);
+		$result3 = showSortList(false);
 	}
 	else {
 		$result1 = showNameEdit($name);
 		$SQL1 = "SELECT u.login FROM users u LEFT JOIN v_user_group g ON u.id = g.idUser WHERE (g.idUser IS NULL or g.nomGroupe <> \"$name\") AND u.isCoach = 0"; // cette requète n'est pas bonne
 		$SQL2 = "SELECT login FROM v_user_group WHERE nomGroupe = \"$name\"";
-		$result3 = showDragList(parcoursSel(SQLSelect($SQL2), "login"));
+		$result3 = showSortList(parcoursSel(SQLSelect($SQL2), "login"));
 	}
 	
-	$result2 = showDragList(parcoursSel(SQLSelect($SQL1), "login"));
+	$result2 = showSortList(parcoursSel(SQLSelect($SQL1), "login"));
 	
 	$result = array("nameGroup" => $result1, "freeUsers" => $result2, "groupUsers" => $result3);
 	echo json_encode($result);
@@ -97,7 +95,6 @@ if ($action == "edit") {
 
 if ($action == "add") {
 	$name = $_POST['name'];
-	$users = $_POST['users'];
 	$users = $_POST['users'];
 	
 	// Réupération des ids
