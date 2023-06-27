@@ -75,10 +75,10 @@ function verifUserBdd($login,$passe)
 	// on aurait du utiliser SQLSelect
 }
 
-function isAdmin($idUser)
+function isCoach($idUser)
 {
 	// vérifie si l'utilisateur est un administrateur
-	$SQL="SELECT admin FROM users WHERE id='$idUser'";
+	$SQL="SELECT isCoach FROM users WHERE id='$idUser'";
 	return SQLGetChamp($SQL);
 
 }

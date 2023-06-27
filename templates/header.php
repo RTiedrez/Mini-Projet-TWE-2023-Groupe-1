@@ -21,6 +21,20 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<style type="text/css">
+		#banniere {
+			background-color: rgba(0,0,0,0.6);
+			color: #FFFFFF;
+			padding: 10px;
+			margin-bottom: 10px;
+			height: 100px;
+		}
+		#logo {
+			float: left;
+			margin-right: 10px;
+		}
+	</style>
 </head>
 <!-- **** F I N **** H E A D **** -->
 
@@ -34,15 +48,25 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <img src="ressources/Logo.png" alt="Logo de Gigachad Workout"/>
 </div>
 
-<a href="index.php?view=home">Home</a>
-<a href="index.php?view=user">User</a>
+<a href="index.php?view=home">Accueil</a>
 
 <?php
 // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
-if (!valider("connecte","SESSION"))
+if (!valider("connecte","SESSION")) {
 	echo "<a href=\"index.php?view=signin\">SIGN IN</a>";
 	echo " ";
 	echo "<a href=\"index.php?view=signup\">SIGN UP</a>";
+} else {
+	if (!valider("isCoach","SESSION")) {
+		echo "<a href=\"index.php?view=user\">Dashboard</a>";
+	} else {
+		echo "<a href=\"index.php?view=coach_dashboard\">Dashboard</a>";
+		echo "<a href=\"index.php?view=coach_exercices\">Exercices</a>";
+		echo "<a href=\"index.php?view=coach_workouts\">Workouts</a>";
+		echo "<a href=\"index.php?view=coach_groups\">Groups</a>";
+		echo "<a href=\"index.php?view=coach_requests\">Requests</a>";
+	}
+}
 ?>
 
 </div>
