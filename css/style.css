@@ -1,0 +1,46 @@
+.rounded-box{
+    border-radius: 17px;
+}
+
+.red{
+    color: red;
+}
+
+.black-transparent-background{
+    background-color: rgba(0,0,0,.8);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 500,
+        'GRAD' 0,
+        'opsz' 48
+}
+
+#homeDiv .material-symbols-outlined{
+    font-size: 50px;
+}
+
+#homeDiv {
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    max-width: 1000px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    font-family: 'Bebas Neue';
+}
+
+#homeDiv p {
+    color: white;
+    font-size: 50px;
+}
+
+#homeDiv h1 {
+    color: white;
+    font-size: 100px;
+}
