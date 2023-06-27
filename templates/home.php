@@ -4,9 +4,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 	<style type="text/css">
-		#corps {
-			background-color: rgba(0,0,0,.8);
+		
+		.rounded-box{
 			border-radius: 17px;
+		}
+		
+		#corps {
 			padding-left: 200px;
 			padding-right: 200px;
 			padding-top: 40px;
@@ -16,6 +19,10 @@
 			margin-left: auto;
 			margin-right: auto;
 			font-family: 'Bebas Neue';
+		}
+
+		.black-transparent-background{
+			background-color: rgba(0,0,0,.8);
 		}
 
 		.red{
@@ -53,7 +60,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 ?>
 
-<div id="corps">
+<div id="corps" class="black-transparent-background rounded-box">
 	<h1><span class="red">READY</span> </br> TO LIFT ?</h1>
 	<p>
 		<span class="material-symbols-outlined" style="color: red;">
