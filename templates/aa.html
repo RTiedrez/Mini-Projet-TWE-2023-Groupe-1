@@ -1,0 +1,69 @@
+<div id="timer" >00:00:00</div>
+<input type="button" id="start-workout-button" value="Start" onclick="startTimer()">
+<input type="button" id="stop-workout-button" value="Stop" onclick="stopTimer()">
+<input type="button" id="skip-workout-button" value="Skip" onclick="skipTimer()">
+<input type="button" id="next-workout-button" value="Next" onclick="nextTimer()">
+</div>
+<script>
+  var dashboard_page;
+  var workout_page;
+
+  function to_dashboard() {
+    alert(document.getElementById("dashboard-user").text);
+    dashboard_page = document.getElementById("dashboard-user");
+    workout_page = document.getElementById("workout-user");
+    alert(dashboard_page.style.display);
+    if (dashboard_page.style.display == "none") {
+
+      workout_page.style.display = "none";
+      dashboard_page.style.display = "block";
+    }
+  }
+
+  function to_workout() {
+    dashboard_page = document.getElementById("dashboard-user");
+    workout_page = document.getElementById("workout-user");
+    
+    if (workout_page.style.display === "none") {
+      dashboard_page.style.display = "none";
+      workout_page.style.display = "block";
+    }
+  }
+  var timerDisplay = document.getElementById("timer");
+  var intervalId;
+  var seconds = 0;
+
+    function startTimer() {
+      clearInterval(intervalId);
+      intervalId = setInterval(updateTimer, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(intervalId);
+    }
+
+    function skipTimer() {
+      seconds += 10;
+      updateTimer();
+    }
+
+    function nextTimer() {
+      seconds = 0;
+      updateTimer();
+    }
+
+    function updateTimer() {
+      var hours = Math.floor(seconds / 3600);
+      var minutes = Math.floor((seconds % 3600) / 60);
+      var remainingSeconds = seconds % 60;
+
+      hours = (hours < 10 ? "0" : "") + hours;
+      minutes = (minutes < 10 ? "0" : "") + minutes;
+      remainingSeconds = (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+
+      var timeString = hours + ":" + minutes + ":" + remainingSeconds;
+      timerDisplay.innerHTML = timeString;
+
+      seconds++;
+    }
+</script>
