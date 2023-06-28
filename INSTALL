@@ -1,0 +1,21 @@
+## Installation ##
+
+Vous avez besoin d'un serveur Apache2 avec phpMyAdmin et MySQL d'installés.
+Importez la base de données bdd.sql sur phpMyAdmin.
+Décompressez cette archive dans un dossier de votre serveur Apache2.
+Ouvrez votre navigateur et rendez-vous à l'adresse localhost/chemin/vers/le/dossier/du/projet.
+Il vous faut renseigner les identifiants associés à votre installation MySQL dans le fichier libs/config.php.
+
+## Tests ##
+
+Nous vous conseillons d'utiliser les identifiants suivants pour tester les fonctionnalités du site :
+
+# Utilisateur #
+
+login : tom
+password : web
+
+# Coach #
+
+login : Kevin
+password : kevin
