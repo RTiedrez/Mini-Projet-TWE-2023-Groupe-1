@@ -1,3 +1,5 @@
+<!-- Auteur : Roman TIEDREZ -->
+
 <?php
 
 // Si la page est appelée directement par son adresse, on redirige en passant pas la page index
@@ -38,6 +40,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			$("#menu-image").click(function() {
 				$("#dropdown").toggle();
 			});
+
+			// Cliquer sur le logo redirige vers l'accueil
+			$("#logo").click(function() {
+				window.location.href = "index.php?view=home";
+			});
 			
 		});
 	</script>
@@ -45,6 +52,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<style type="text/css">
+		#logo:hover {
+			cursor: pointer;
+		}
 		#banniere {
 			background-color: rgba(0,0,0,0.6);
 			padding: 10px;
