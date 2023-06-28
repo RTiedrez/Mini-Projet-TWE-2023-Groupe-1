@@ -142,7 +142,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 
 	<div id="logo">
-		<!-- TODO : rendre l'image cliquable -->
 		<img src="ressources/Logo.png" alt="Logo de Gigachad Workout"/>
 	</div>
 
