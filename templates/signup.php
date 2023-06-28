@@ -24,6 +24,12 @@ if($err = valider("error")) {
 		case "err_noLogin":
 			echo "<p>Veuillez renseigner un pseudo</p>";
 			break;
+		case "err_passwordLength":
+			echo "<p>Le mot de passe doit faire moins de 32 caractères</p>";
+			break;
+		case "err_loginLength":
+			echo "<p>Le pseudo doit faire moins de 16 caractères</p>";
+			break;
 	}
 	echo "</div>";
 }

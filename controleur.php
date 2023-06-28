@@ -57,21 +57,26 @@ session_start();
 				//pas de login renseigné
 				if(!$login) $qs="?view=signup&error=err_noLogin";
 				//pas de mot de passe renseigné
-				else if(!$passe)	$qs="?view=signup&error=err_noPassword";
+				else if(!$passe) $qs="?view=signup&error=err_noPassword";
+				else if(strlen($login) > 16) $qs="?view=signup&error=err_loginLength";
 				//tous les champs du formulaire signup ont été correctement remplis
 				else if($passe == $confirm_passe) {
 					//verification que le login n'est pas déjà utilisé par un autre utilisateur
-					if(!verifLoginBdd($login)) {
-						$isCoach = $userType == "coach" ? 1 : 0;
-						//on insère le nouvel utilisateur dans la bdd
-						ajouterUser($login,$passe,$isCoach);
-						//on met à jour les variables de session
-						verifUser($login,$passe);
-						//on le redirige vers sa page d'accueil (coach ou user)
-						if($isCoach) $qs="?view=coach";
-						else 		 $qs="?view=user";
+					if(strlen($passe) <= 32) { //on vérifie qu'on ne dépasse pas les tailles définie dans la base de données
+						if(!verifLoginBdd($login)) {
+							$isCoach = $userType == "coach" ? 1 : 0;
+							//on insère le nouvel utilisateur dans la bdd
+							ajouterUser($login,$passe,$isCoach);
+							//on met à jour les variables de session
+							verifUser($login,$passe);
+							//on le redirige vers sa page d'accueil (coach ou user)
+							if($isCoach) $qs="?view=coach";
+							else 		 $qs="?view=user";
+						} else {
+							$qs="?view=signup&error=err_loginUsed";
+						}
 					} else {
-						$qs="?view=signup&error=err_loginUsed";
+						$qs="?view=signup&error=err_passwordLength";
 					}
 				} else {
 					$qs="?view=signup&error=err_badConfirm";
