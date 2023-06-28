@@ -84,7 +84,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			}
 		} else {
 			// S'il n'est pas connecté, il n'a accès qu'à la page d'accueil
-				echo "<a id=\"home\" class=\"lien\" href=\"index.php?view=home\">Home</a>";
+			echo "<a id=\"home\" class=\"lien\" href=\"index.php?view=home\">Home</a>";
 		}
 		?>
 	</div>

@@ -33,7 +33,7 @@ session_start();
 						// Cf. maLibSecurisation
 						if(verifUser($login,$passe)){
 							if($_SESSION["isCoach"]) 
-								$qs="?view=coach";
+								$qs="?view=coach_dashboard";
 							else
 								$qs="?view=user";						
 						} else {
