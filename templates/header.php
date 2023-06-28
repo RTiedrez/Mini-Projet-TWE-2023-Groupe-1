@@ -20,7 +20,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <head>	
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
-
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
 	<script src="js/jquery-3.7.0.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -28,6 +30,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			// Colorier le lien correspondant à la page active 
 			var url = window.location.href;
 			var page = url.split("view=")[1];
+			if (page == undefined) {
+				page = "home";
+			}
 			$("#"+page).addClass("selected");
 
 			$("#menu-image").click(function() {
@@ -61,18 +66,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			color: #FFFFFF;
 			margin-left: 64px;
 		}
-		@font-face {
-			font-family: "Roboto";
-			src: url("ressources/fonts/Roboto/Roboto-Regular.ttf");
-		}
-		@font-face {
-			font-family: "BebasNeue";
-			src: url("ressources/fonts/Bebas_Neue/BebasNeue-Regular.ttf");
-		}
-		@font-face {
-			font-family: "AnonymousPro";
-			src: url("ressources/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf");
-		}
 		.selected {
 			color: #FF0000;
 		}
@@ -85,7 +78,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			margin-right: 64px;
 			font-size: 32px;
 			font-weight: bold;
-			font-family: "BebasNeue";
+			font-family: "Bebas Neue";
 			padding: 8px 40px;
 			border-radius: 22px;
 			text-decoration: none;
