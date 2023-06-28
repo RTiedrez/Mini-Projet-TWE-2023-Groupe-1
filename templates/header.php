@@ -148,7 +148,8 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<div id="liens">
 
 		<?php
-		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
+		// Si l'utilisateur est connecté, on affiche les liens vers ses pages de l'utilisateur
+		// Selon qu'il soit coach ou non, on affiche des liens différents
 		if (valider("connecte","SESSION")) {
 			if (!valider("isCoach","SESSION")) {
 				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
@@ -160,14 +161,15 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				echo "<a id=\"coach_requests\" class=\"lien\" href=\"index.php?view=coach_requests\">Requests</a>";
 			}
 		} else {
+			// S'il n'est pas connecté, il n'a accès qu'à la page d'accueil
 				echo "<a id=\"home\" class=\"lien\" href=\"index.php?view=home\">Accueil</a>";
-
 		}
 		?>
 	</div>
 
 	<div id="signs">
 		<?php
+		// Si l'utilisateur n'est pas connecté, on affiche aussi les liens vers les pages de connexion et d'inscription
 		if (!valider("connecte","SESSION")) {
 			echo "<a class=\"sign\" id=\"signin\" href=\"index.php?view=signin\">SIGN IN</a>";
 			echo "<a class=\"sign\" id=\"signup\" href=\"index.php?view=signup\">SIGN UP</a>";
@@ -177,21 +179,21 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	<div id="menu">
 
-			<?php
-			if (valider("connecte","SESSION")) {
-				echo "<img id=\"menu-image\" src=\"ressources/lucas.png\" alt=\"Bouton menu contextuel\"/>";
-				echo "<div id=\"dropdown\" class=\"dropdown-content\">";
-				if (!valider("isCoach","SESSION")) {
-					echo "<a href=\"index.php?view=user\">Dashboard</a>";
-				} else {
-					echo "<a href=\"index.php?view=coach_dashboard\">Dashboard</a>";
-				}
-				echo "<a href=\"controleur.php?action=Logout\">Se Déconnecter</a>";
-				}
-			?>
-		</div>
+		<?php
+		// Si l'utilisateur est connecté, on affiche le menu contextuel
+		if (valider("connecte","SESSION")) {
+			echo "<img id=\"menu-image\" src=\"ressources/lucas.png\" alt=\"Bouton menu contextuel\"/>";
+			echo "<div id=\"dropdown\" class=\"dropdown-content\">";
+			if (!valider("isCoach","SESSION")) {
+				echo "<a href=\"index.php?view=user\">Dashboard</a>";
+			} else {
+				echo "<a href=\"index.php?view=coach_dashboard\">Dashboard</a>";
+			}
+			echo "<a href=\"controleur.php?action=Logout\">Se Déconnecter</a>";
+			}
+		?>
 	</div>
-
+</div>
 </div>
 </body>
 <!-- **** F I N **** B O D Y **** -->
