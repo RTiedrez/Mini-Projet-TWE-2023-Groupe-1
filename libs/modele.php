@@ -32,27 +32,7 @@ function verifUserBdd($login,$passe)
 	// dont les identifiants sont passes en paramètre
 	// renvoie faux si user inconnu
 	// renvoie l'id de l'utilisateur si succès
-
 	$SQL="SELECT id FROM users WHERE login='$login' AND password='$passe'";
-
-	// $tab=parcoursRs(SQLSelect($SQL));
-	// if (count($tab) != 0) return $tab[0]["id"] else return false;
-	// return $tab[ø]["id"];
-
-	return SQLGetChamp($SQL);
-
-	// On utilise SQLGetChamp
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
-}
-
-function verifLoginBdd($login) 
-{
-	// vérifie qu'un login existe dans la base de donnée
-	// renvoie l'id de l'utilisateur ayant ce login s'il existe
-	// renvoie false si le login n'existe pas
-
-	$SQL="SELECT id FROM users WHERE login='$login'";
 	return SQLGetChamp($SQL);
 }
 
