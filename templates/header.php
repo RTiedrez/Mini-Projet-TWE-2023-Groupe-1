@@ -148,7 +148,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	<div id="liens">
 
-		<a id="home" class="lien" href="index.php?view=home">Accueil</a>
 		<?php
 		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 		if (valider("connecte","SESSION")) {
@@ -161,6 +160,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				echo "<a id=\"coach_groups\" class=\"lien\" href=\"index.php?view=coach_groups\">Groups</a>";
 				echo "<a id=\"coach_requests\" class=\"lien\" href=\"index.php?view=coach_requests\">Requests</a>";
 			}
+		} else {
+				echo "<a id=\"home\" class=\"lien\" href=\"index.php?view=home\">Accueil</a>";
+
 		}
 		?>
 	</div>

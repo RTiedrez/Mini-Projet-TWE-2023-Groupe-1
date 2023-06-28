@@ -78,7 +78,7 @@ session_start();
 				}
 			break;
 
-			case 'Annuler': //annulation de la création de compte
+			case 'Annuler': // annulation de la création de compte
 				$qs="?view=home";
 			break;
 
