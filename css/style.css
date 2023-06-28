@@ -2,8 +2,28 @@
     border-radius: 17px;
 }
 
+.form-button{
+    border-radius: 17px;
+    padding: 1px;
+    font-size: 30px;
+    padding: 10px 10px;
+    margin: 10px;
+    min-width: 150px;
+    font-family: 'Bebas Neue';
+    border: none;
+}
+
+.centered {
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .red{
     color: red;
+}
+
+.red_background{
+    background-color: #ff0000;   
 }
 
 .black-transparent-background{
@@ -43,4 +63,73 @@
 #homeDiv h1 {
     color: white;
     font-size: 100px;
+}
+
+#errDiv {
+    background-color: #ff000060;
+    border-radius: 17px;
+    border: #ff0000 solid 3px;
+    font-family: 'Bebas Neue';
+    font-size: 20px;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+#signupDiv {
+    min-width: 200px;
+    max-width: 1000px;
+    padding: 40px;
+    margin-top: 100px;
+    text-align: center;
+    font-family: 'Bebas Neue';
+}
+
+#signupDiv label{
+    color: white;
+    font-size: 40px;
+}
+
+#signupDiv input[value='Annuler'] {
+    background-color: #ffb3b3;
+}
+
+#signupDiv input[value='SIGN UP'] {
+    background-color: #ff0000;
+    color: white;
+}
+
+.connection-text-input{
+    border-radius: 7px;
+    margin: 10px;
+    min-height: 40px;
+    text-align: center;
+    max-width: 700px;
+    min-width: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 30px;
+    font-family: 'Bebas Neue';
+}
+
+#signinDiv {
+    text-align: center;
+    min-width: 200px;
+    max-width: 1000px;
+    padding: 40px;
+    margin-top: 100px;
+    font-family: 'Bebas Neue';
+}
+
+#signinDiv input[value="Annuler"] {
+    background-color: #ffb3b3;
+}
+
+#signinDiv input[value="SIGN IN"] {
+    background-color: #ff0000;
+    color: white;
 }

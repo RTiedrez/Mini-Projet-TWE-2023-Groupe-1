@@ -20,9 +20,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <head>	
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css?v=1"> <!-- ?v=1 oblige le navigateur à recharger la feuille de style, sinon il faut vider le cache pour avoir la feuille de style mise à jour -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+	<script src="js/jquery-3.7.0.min.js"></script>
 </head>
 <!-- **** F I N **** H E A D **** -->
 
