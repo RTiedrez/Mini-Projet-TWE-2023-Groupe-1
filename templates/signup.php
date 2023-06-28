@@ -1,3 +1,4 @@
+<!-- Auteur : Lucas SALAND -->
 <?php
 include_once "libs/maLibForms.php";
 
