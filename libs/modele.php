@@ -12,20 +12,6 @@ Dans ce fichier, on définit diverses fonctions permettant de récupérer des do
 
 include_once("maLibSQL.pdo.php"); // include_once vérifie que la library n'a pas déjà été include (à privilégier)
 
-function listerUtilisateurs($classe = "both")
-{
-	// Cette fonction liste les utilisateurs de la base de données 
-	// et renvoie un tableau d'enregistrements. 
-
-	$SQL="SELECT id,pseudo,blacklist,admin,couleur from users";
-	if ($classe == "bl") $SQL .= " WHERE blacklist=1"; // /!\ .= en PHP !!!!!
-	if ($classe == "nbl") $SQL .= " WHERE blacklist=0";
-
-	// die($SQL); // Bonne pratique
-	return parcoursRs(SQLSelect($SQL));
-
-}
-
 function verifUserBdd($login,$passe)
 {
 	// Vérifie l'identité d'un utilisateur 
