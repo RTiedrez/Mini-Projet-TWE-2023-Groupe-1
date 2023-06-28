@@ -44,22 +44,60 @@ if ($action == "edit") {
 	$name = $_POST['name'];
 	$oName = $_POST['oName'];
 	$desc = $_POST['desc'];
+	$hasmedia = $_POST['hasmedia'];
 	
 	// Réupération de l'id
 	$SQL = "SELECT id FROM exercises WHERE title = \"$oName\"";
 	$id = SQLGetChamp($SQL);
 	
-	$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\" WHERE id = $id";	
+	if ($hasmedia == "true") {
+		$media = $_FILES['media'];
+		$uploadDir = "./media/";
+		$fileName = $media["name"];
+		$path = $uploadDir . $fileName;
+		if (!(move_uploaded_file($media["tmp_name"], ".".$path))) {
+			$media = false;
+		}
+		$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", file = \"$path\" WHERE id = $id";
+	}
+	else {
+		$SQL = "SELECT file FROM exercises WHERE id = \"$id\"";
+		$path = SQLGetChamp($SQL);
+		$media = $_POST['media'];
+		if ($path == $media) {
+			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\" WHERE id = $id";
+		}
+		$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", file = NULL WHERE id = $id";
+	}
+
 	SQLUpdate($SQL);
 }
 
 if ($action == "add") {
 	$name = $_POST['name'];
 	$desc = $_POST['desc'];
+	$hasmedia = $_POST['hasmedia'];
+	
+	if ($hasmedia == "true") {
+		$media = $_FILES['media'];
+		$uploadDir = "../media/";
+		$fileName = $media["name"];
+		$path = $uploadDir . $fileName;
+		if (!(move_uploaded_file($media["tmp_name"], $path))) {
+			$media = false;
+		}
+	}
+	else {
+		$media = false;
+	}
 	
 	// Création
-	$SQL = "INSERT INTO exercises (title, description) VALUES (\"$name\", \"$desc\")"; //ajouter id coach
-		
+	if ($media) {
+		$SQL = "INSERT INTO exercises (title, description, file) VALUES (\"$name\", \"$desc\", \"$path\")"; //ajouter id coach
+	}
+	else {
+		$SQL = "INSERT INTO exercises (title, description) VALUES (\"$name\", \"$desc\")";
+	}
 	SQLInsert($SQL);
 }
 

@@ -19,7 +19,7 @@ else {
 
 $result = parcoursRs(SQLSelect($SQL));
 
-showEntry($result, "user", "login");
+echo showEntry($result, "user", "login");
 
 ?>
 

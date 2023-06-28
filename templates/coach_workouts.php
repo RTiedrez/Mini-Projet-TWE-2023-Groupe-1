@@ -60,11 +60,10 @@ function loadEditor(name) {
 		method: 'POST',
 		data: {action:"editor",name:name},
 		success: function(result) {
-			console.log(result);
 			r = JSON.parse(result);
-			$('#nameEditor').html(r.nameWorkout);
-			$('#left-list').html(r.freeUsers);
-			$('#right-list').html(r.workoutUsers);
+			$('#name-workout').html(r["name-workout"]);
+			$('#workout-content').html(r["workout-content"]);
+			$('#workout-add').html(r["workout-add"]);
 		}
 	});
 	
@@ -73,25 +72,31 @@ function loadEditor(name) {
 }
 
 function addWorkout() {
-	var users = [];
+	
+	var exercises = [];
 	var name = $("#editName").val();
 	
-	$("#right-list p").each(function() {
-		users.push($(this).text());
+	$(".big-item").each(function() {
+		var t = $(this).find("p").text();
+		var d = $(this).find("input[type=text]").val();
+		exercises.push({title:t,duration:d});
 	});
 	
 	if ($("#editor").data("mode") == "add") {
-		data = {action:"add",name:name,users:users};
+		data = {action:"add",name:name,exercises:exercises};
 	}
 	if ($("#editor").data("mode") == "edit") {
-		data = {action:"edit",name:name,users:users,oName:$("#editor").data("name")};
+		data = {action:"edit",name:name,exercises:exercises,oName:$("#editor").data("name")};
 	}
+	
+	console.log(data);
 	
 	$.ajax({
 		url: url,
 		method: 'POST',
 		data: data,
 		success: function(result) {
+			console.log(result);
 		}
 	});
 	
@@ -116,19 +121,18 @@ function delWorkout() {
 function init() {
 	showWorkoutList();
 	
-	$("#editor").hide()
+	$("#editor").hide();
 	$("#left, #right").show();
 	
-	$("#right-list").sortable({revert:true}).disableSelection();
-	/*
-	$(".draggable").each(function() {
-		$(this).draggable({connectToSortable: "#right-list",helper:"clone"}).disableSelection();
-	});
-	*/
-	$("#left-list").on('mouseenter', "p", function() {
-		$(this).draggable({connectToSortable:"#right-list",helper:"clone",revert:"invalid"}).disableSelection();
-	});
+	$("#workout-content").sortable().disableSelection();
 }
+
+
+var jBigItem = $("<div>").addClass("big-item")
+					.append($("<p>").html("Exercice vide"))
+					.append($("<input type='text'>").val("00:00:00")
+													.prop("pattern", "[0-9]{2}:[0-9]{2}:[0-9]{2}"))
+					.append($("<input type='button'>").val("X"));
 
 $(document).ready(function(){
 	
@@ -163,19 +167,34 @@ $(document).ready(function(){
 		loadEditor($(".item-selected").text());
 	});
 	
+	// Ajout élément workout
+	$("#editor").on("click", "#add", function () {
+		name = $("#add-exercise").find(":selected").val();
+		dura = $("#add-duration").val();
+		console.log("added " + name + " : " + dura);
+		var jBIClone = jBigItem.clone();
+		jBIClone.find("p").html(name);
+		jBIClone.find("input[type=text]").val(dura);
+		$("#workout-content").append(jBIClone);
+	});
+	
+	// Suppression élément workout
+	$("#editor").on("click", "input[type=button]", function () {
+		$(this).closest(".big-item").remove();
+	});
 	
 	// Gérer le passage en mode affichage
-	$("#content").on("click", "#can", function() {
+	$("#editor").on("click", "#can", function() {
 		$("h1").html("Workout");
 		init();
 	});
 	
-	$("#content").on("click", "#val", function() {
+	$("#editor").on("click", "#val", function() {
 		$("h1").html("Workout");
 		addWorkout();
 	});
 	
-	$("#content").on("click", "#del", function() {
+	$("#editor").on("click", "#del", function() {
 		$("h1").html("Workout");
 		delWorkout();
 	});
@@ -244,10 +263,8 @@ div {
 	border:solid 1px red;
 }
 
-#workoutEditor, #dragUserList {
+#workout-editor {
 	size:relative;
-	float:left;
-	width:45%;
 	background-color:rgb(200,200,200);
 	min-height:30vh;
 	border-radius:10px;
@@ -267,14 +284,10 @@ ul {
 	<h1>Workouts</h1>
 	
 	<div id="editor">
-		<div id="nameEditor"></div>
-		<div id="dragUserList">
-			<ul id="left-list" class="sortable-list">
-			</ul>
-		</div>
-		<div id="workoutEditor">
-			<ul id="right-list" class="sortable-list">
-			</ul>
+		<div id="name-workout"></div>
+		<div id="workout-editor">
+			<div id="workout-content"></div>
+			<div id="workout-add"></div>
 			<input id=val type=button value=Validate>
 			<input id=del type=button value=Delete>
 			<input id=can type=button value=Cancel>

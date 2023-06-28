@@ -58,8 +58,12 @@ function showExercise($tab) {
 		foreach($tab as $exercise) {
 			$t = $exercise["title"];
 			$d = $exercise["description"];
+			$f = $exercise["file"];
 			$s .= "<p>Exercice : $t</p><hr/>";
 			$s .= "<p>Description : $d</p><hr/>";
+			if ($f != null) {
+				$s .= "<img src=$f><hr/>";
+			}
 		}
 	}
 	else {
@@ -87,12 +91,12 @@ function showExerciseEditor($tab) {
 	$s = "<input type=text id=editName value=\"$title\"><br/>";
 	$s .= "<textarea id=editDesc>$desc</textarea>";
 	
-	$result["propertyEditor"] = $s;
+	$result["property-editor"] = $s;
 	if ($file != "") {
-		$result["currentImg"] = "<img src=\"$file\">";
+		$result["current-media"] = ltrim($file, "./media/");
 	}
 	else {
-		$result["currentImg"] = false;
+		$result["current-media"] = false;
 	}
 	
 	
@@ -117,6 +121,31 @@ function showWorkout($tab) {
 	$s .= "<p class=workout>Edit workout</p>";
 	$s .= "</div>";
 	$s .= "</div>";
+	return $s;
+}
+
+function showAddWorkout($tab) {
+	$s = "<hr/><select name=\"Exercise\" id=\"add-exercise\">";
+	if ($tab) {
+		foreach($tab as $t) {
+			$s .= "<option value=\"$t\">$t</option>";
+		}
+	}
+	$s .= "</select>";
+	$s .= "<input id=\"add-duration\" type=text required pattern=\"[0-9]{2}:[0-9]{2}:[0-9]{2}\" value=\"00:00:00\">";
+	$s .= "<input id=add type=button value=+><hr/>";
+	return $s;
+}
+
+function showItemWorkout($tab) {
+	$s = "";
+	if ($tab) {
+		foreach($tab as $t) {
+			$title = $t["title"];
+			$dura = $t["duration"];
+			$s .= "<div class=big-item><p>$title</p><input type=text required pattern=\"[0-9]{2}:[0-9]{2}:[0-9]{2}\" value=\"$dura\"><input type=button value=X></div>";
+		}
+	}
 	return $s;
 }
 

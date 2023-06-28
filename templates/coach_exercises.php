@@ -60,18 +60,18 @@ function loadEditor(name) {
 		method: 'POST',
 		data: {action:"editor",name:name},
 		success: function(result) {
-			console.log(result);
 			r = JSON.parse(result);
-			$('#propertyEditor').html(r.propertyEditor);
-			if(r.currentImg != false) {
-				$('#currentImg').html(r.currentImg);
+			$('#property-editor').html(r["property-editor"]);
+			if(r["current-media"] != false) {
+				$('#drop-zone').html(r["current-media"]);
+				$("#drop-zone").data("media",r["current-media"]);
+				$("#drop-zone").css('border-color', 'blue');
 			}
 			else {
-				$('#currentImg').html("<p>No image attached</p>");
+				$("#drop-zone").data("media",false);
 			}
 		}
 	});
-	
 	$("#editor").show()
 	$("#left, #right").hide();
 }
@@ -79,19 +79,37 @@ function loadEditor(name) {
 function addExercise() {
 	var name = $("#editName").val();
 	var desc = $("#editDesc").val();
+	var media = $("#drop-zone").data("media");
+	
+	var formData = new FormData();
+	formData.append('name', name);
+	formData.append('desc', desc);
+	formData.append('media', media);
+	
+	if ((typeof media) == "object") {
+		formData.append("hasmedia", true);
+	}
+	else {
+		formData.append("hasmedia", false);
+	}
 	
 	if ($("#editor").data("mode") == "add") {
-		data = {action:"add",name:name,desc:desc};
+		formData.append('action', 'add');
 	}
 	if ($("#editor").data("mode") == "edit") {
-		data = {action:"edit",name:name,desc:desc,oName:$("#editor").data("name")};
+		formData.append('action', 'edit');
+		var oName = $("#editor").data("name");
+		formData.append('oName', oName);
 	}
 	
 	$.ajax({
 		url: url,
 		method: 'POST',
-		data: data,
+		data: formData,
+		processData: false,
+		contentType: false,
 		success: function(result) {
+			console.log(result);
 		}
 	});
 	
@@ -153,21 +171,48 @@ $(document).ready(function(){
 	
 	
 	// Gérer le passage en mode affichage
-	$("#content").on("click", "#can", function() {
+	$("#editor").on("click", "#can", function() {
 		$("h1").html("Exercise");
 		init();
 	});
 	
-	$("#content").on("click", "#val", function() {
+	$("#editor").on("click", "#val", function() {
 		$("h1").html("Exercise");
 		addExercise();
 	});
 	
-	$("#content").on("click", "#del", function() {
+	$("#editor").on("click", "#del", function() {
 		$("h1").html("Exercise");
 		delExercise();
 	});
 	
+	// Gérer la drop zone
+	$("#drop-zone").on("dragover", function(r) {
+		r.preventDefault();
+		$("#drop-zone").css('border-color', 'red');
+	});
+	
+	$("#drop-zone").on("dragleave", function(r) {
+		r.preventDefault();
+		$("#drop-zone").css('border-color', 'rgb(200,200,200)');
+	});
+	
+	$("#drop-zone").on("drop", function(r) {
+		r.preventDefault();
+		var file = r.originalEvent.dataTransfer.files[0];
+				
+		if (file.type.match("image.*|video.*")) {
+			$("#drop-zone").css('border-color', 'blue');
+			$("#drop-zone").html(file["name"]);
+			$("#drop-zone").data("media",file);
+		}
+	});
+	
+	$("#editor").on("click", "#rem", function() {
+		$("#drop-zone").css('border-color', 'rgb(200,200,200)');
+		$("#drop-zone").data("media",false);
+		$("#drop-zone").html("Drop an image or a video");
+	});
 });
 
 </script>
@@ -244,7 +289,7 @@ ul {
 	min-height:20vh;!important
 }
 
-#propertyEditor, #media {
+#property-editor, #media {
 	color:black;
 	float:left;
 	width:45%;
@@ -252,13 +297,14 @@ ul {
 	margin:10px;
 }
 
-#dropZone {
+#drop-zone {
 	background-color:rgb(240,240,240);
 	border:solid 2px darkgrey;
 	border-radius:10px;
 	padding:10px;
 	margin:10px;
 	min-height:20vh;
+	color:black;
 }
 
 #editName, #editDesc {
@@ -277,11 +323,12 @@ ul {
 	<h1>Exercises</h1>
 	
 	<div id="editor">
-		<div id="propertyEditor"></div>
+		<div id="property-editor"></div>
 		<div id="media">
-			<div id="currentImg"></div>
-			<div id="dropZone"></div>
+			<div id="drop-zone">Drop an image or a video</div>
+			<input id=rem type=button value=Remove>
 		</div>
+		
 		<input id=val type=button value=Validate>
 		<input id=del type=button value=Delete>
 		<input id=can type=button value=Cancel>

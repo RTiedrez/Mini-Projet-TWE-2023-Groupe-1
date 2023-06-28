@@ -17,7 +17,7 @@ if ($action == "list") {
 if ($action == "workout") {
 	$name = $_POST['name'];
 
-	$SQL = "SELECT * FROM v_workout_exercise WHERE name = \"$name\"";
+	$SQL = "SELECT * FROM v_workout_exercise WHERE name = \"$name\" ORDER BY position";
 
 	$result = parcoursRs(SQLSelect($SQL));
 
@@ -28,37 +28,49 @@ if ($action == "workout") {
 if ($action == "editor") {
 	$name = $_POST['name'];
 	
-	$SQL1 = "SELECT title FROM exercises";
+	$SQL2 = "SELECT title FROM exercises";
 	
 	if ($name == "create-new-workout") {
 		$result1 = showNameEdit(false);
-		$result3 = showSortList(false);
+		$result2 = "";
 	}
 	else {
 		$result1 = showNameEdit($name);
-		$SQL2 = "SELECT title FROM v_workout_exercise WHERE name = \"$name\"";
-		$result3 = showSortList(parcoursSel(SQLSelect($SQL2), "title"));
+		$SQL1 = "SELECT * FROM v_workout_exercise WHERE name = \"$name\" ORDER BY position";
+		$result2 = showItemWorkout(parcoursRs(SQLSelect($SQL1)));
 	}
 	
-	$result2 = showSortList(parcoursSel(SQLSelect($SQL1), "title"));
+	$result3 = showAddWorkout(parcoursSel(SQLSelect($SQL2), "title"));
 	
-	$result = array("nameWorkout" => $result1, "freeUsers" => $result2, "workoutUsers" => $result3);
+	$result = array("name-workout" => $result1, "workout-content" => $result2, "workout-add" => $result3);
 	echo json_encode($result);
 }
 
 if ($action == "edit") {
 	$name = $_POST['name'];
 	$oName = $_POST['oName'];
-	$users = $_POST['users'];
+	$exercises = $_POST['exercises'];
 	
 	// Réupération des ids
 	$SQL = "SELECT id FROM workouts WHERE name = \"$oName\"";
 	$id = SQLGetChamp($SQL);
-	$idUsers = array();
+	$idExercises = array();
 	
-	foreach($users as $u) {
-		$SQL = "SELECT id FROM users WHERE login = \"$u\"";
-		array_push($idUsers, SQLGetChamp($SQL));
+	$index = 0;
+	foreach($exercises as $e) {
+		$t = $e["title"];
+		$d = $e["duration"];
+		$SQL = "SELECT id FROM exercises WHERE title = \"$t\"";
+		array_push($idExercises , array(SQLGetChamp($SQL),$d,$index));
+		$index++;
+	}
+	
+	// Maj des exercices
+	$SQL = "SELECT * FROM v_workout_exercise WHERE idWorkout = $id ORDER BY position";
+	$req = parcoursRs(SQLSelect($SQL));
+	$oExercises = array();
+	foreach($req as $o) {
+		array_push($oExercises, array($o["idExercise"], $o["duration"], $o["position"]));
 	}
 	
 	// Maj du nom
@@ -67,27 +79,36 @@ if ($action == "edit") {
 		SQLUpdate($SQL);
 	}
 	
-	// Maj des membres
-	$SQL = "SELECT idUser FROM v_user_workout WHERE idWorkout = $id";
-	$req = parcoursRS(SQLSelect($SQL));
-	$oUsers = array();
-	foreach($req as $o) {
-		array_push($oUsers, $o["idUser"]);
-	}
+	$olen = count($oExercises);
+	$nlen = count($idExercises);
 	
-	// Ajout
-	$SQL = "INSERT INTO user_workout (idUser, idWorkout) VALUES ";
-	foreach($idUsers as $u) {
-		if (!(in_array($u, $oUsers))) {
-			$SQL = "INSERT INTO user_workout (idUser, idWorkout) VALUES ($u,$id)";
+	$minlen = min(array($olen,$nlen));
+	$maxlen = max(array($olen,$nlen));
+	
+	for($i = 0; $i < $maxlen; $i++) {
+		if ($i < $minlen) {
+			if ($idExercises[$i] != $oExercises[$i]) {
+				$idE = $idExercises[$i][0];
+				$d = $idExercises[$i][1];
+				$p = $idExercises[$i][2];
+				$SQL = "DELETE FROM workout_exercise WHERE position = $p AND idWorkout = $id";
+				SQLDelete($SQL);
+				$SQL = "INSERT INTO workout_exercise (idExercise, idWorkout, duration, position)
+											VALUES ($idE,$id,\"$d\",$p)";
+				SQLInsert($SQL);
+			}
+		}
+		else if ($nlen == $maxlen) {
+			$idE = $idExercises[$i][0];
+			$d = $idExercises[$i][1];
+			$p = $idExercises[$i][2];
+			$SQL = "INSERT INTO workout_exercise (idExercise, idWorkout, duration, position)
+										VALUES ($idE,$id,\"$d\",$p)";
 			SQLInsert($SQL);
 		}
-	}
-	
-	// Retrait
-	foreach($oUsers as $o) {
-		if (!(in_array($o, $idUsers))) {
-			$SQL = "DELETE FROM user_workout WHERE idUser = $o AND idWorkout = $id";
+		else {
+			$p = $oExercises[$i][2];
+			$SQL = "DELETE FROM workout_exercise WHERE position = $p AND idWorkout = $id";
 			SQLDelete($SQL);
 		}
 	}
@@ -95,14 +116,18 @@ if ($action == "edit") {
 
 if ($action == "add") {
 	$name = $_POST['name'];
-	$users = $_POST['users'];
+	$exercises = $_POST['exercises'];
 	
 	// Réupération des ids
-	$idUsers = array();
+	$idExercises = array();
 	
-	foreach($users as $u) {
-		$SQL = "SELECT id FROM users WHERE login = \"$u\"";
-		array_push($idUsers, SQLGetChamp($SQL));
+	$index = 0;
+	foreach($exercises as $e) {
+		$t = $e["title"];
+		$d = $e["duration"];
+		$SQL = "SELECT id FROM exercises WHERE title = \"$t\"";
+		array_push($idExercises , array(SQLGetChamp($SQL),$d,$index));
+		$index++;
 	}
 	
 	// Création
@@ -110,9 +135,12 @@ if ($action == "add") {
 	$id = SQLInsert($SQL);
 	
 	// Ajout
-	$SQL = "INSERT INTO user_workout (idUser, idWorkout) VALUES ";
-	foreach($idUsers as $u) {
-		$SQL = "INSERT INTO user_workout (idUser, idWorkout) VALUES ($u,$id)";
+	foreach($idExercises as $e) {
+		$idE = $e[0];
+		$d = $e[1];
+		$p = $e[2];
+		$SQL = "INSERT INTO workout_exercise (idExercise, idWorkout, duration, position)
+											VALUES ($idE,$id,\"$d\",$p)";
 		SQLInsert($SQL);
 	}
 }

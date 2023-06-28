@@ -31,6 +31,7 @@ $(document).ready(function(){
 	
 	// Affichage de tous les utilisateurs
 	loadContent();
+	console.log("Loaded");
 	
 	// Affichage dynamique des utilisateurs
 	$('#searchUser').keyup(function() {

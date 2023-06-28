@@ -17,7 +17,7 @@ if ($action == "list") {
 
 	$result = parcoursRs(SQLSelect($SQL));
 
-	showEntry($result, "requester", "nomUser");
+	echo showEntry($result, "requester", "nomUser");
 }
 
 if ($action == "accept") {
