@@ -38,12 +38,102 @@
         'GRAD' 0,
         'opsz' 48
 }
+
+/* UI header */
+#logo:hover {
+    cursor: pointer;
+}
+
+#banniere {
+    background-color: rgba(0,0,0,0.6);
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 100px;
+}
+
+#logo {
+    float: left;
+    margin: -14px;
+}
+
+#liens {
+    float: left;
+    margin-top: 30px;
+}
+
+.lien {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: "Roboto";
+    color: #FFFFFF;
+    margin-left: 64px;
+}
+
+.selected {
+    color: #FF0000;
+}
+
+#signs {
+    position: absolute;
+    right: 0px;
+    top: 48px;
+}
+
+.sign {
+    margin-right: 64px;
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "Bebas Neue";
+    padding: 8px 40px;
+    border-radius: 22px;
+    text-decoration: none;
+}
+#signin {
+    background-color: #FF0000;
+    color: #FFFFFF
+}
+
+#signup {
+    background-color: #FFB3B3;
+    color: #000000;
+}
+
+#menu-image:hover {
+    cursor: pointer;
+}
+
+#menu {
+    position: absolute;
+    right: 20px;
+    top: 24px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: -12px;
+    background-color: #D9D9D9;
+    padding: 8px 40px;
+    border-radius: 25px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    font-family: "AnonymousPro";
+    font-size: 25;
+    font-weight: bold;
+    color: #000000;
+    padding: 10px 0px;
+    text-decoration: none;
+    display: block;
+}
+
 /* UI page d'accueil */
-#homeDiv .material-symbols-outlined{
+#home-div .material-symbols-outlined{
     font-size: 50px;
 }
 
-#homeDiv {
+#home-div {
     padding-left: 200px;
     padding-right: 200px;
     padding-top: 40px;
@@ -56,17 +146,18 @@
     font-family: 'Bebas Neue';
 }
 
-#homeDiv p {
+#home-div p {
     color: white;
     font-size: 50px;
 }
 
-#homeDiv h1 {
+#home-div h1 {
     color: white;
     font-size: 100px;
 }
+
 /* Affichade d'erreur dans les formulaires signup et signin */
-#errDiv {
+#err-div {
     background-color: #ff000060;
     border-radius: 17px;
     border: #ff0000 solid 3px;
@@ -78,8 +169,9 @@
     padding-top: 1px;
     padding-bottom: 1px;
 }
+
 /* Mise en page de signup           */
-#signupDiv {
+#signup-div {
     min-width: 200px;
     max-width: 1000px;
     padding: 40px;
@@ -88,19 +180,20 @@
     font-family: 'Bebas Neue';
 }
 
-#signupDiv label{
+#signup-div label{
     color: white;
     font-size: 40px;
 }
 
-#signupDiv input[value='Annuler'] {
+#signup-div input[value='Annuler'] {
     background-color: #ffb3b3;
 }
 
-#signupDiv input[value='SIGN UP'] {
+#signup-div input[value='SIGN UP'] {
     background-color: #ff0000;
     color: white;
 }
+
 /* UI text input des formulaire signup et signin */
 .connection-text-input{
     border-radius: 7px;
@@ -116,8 +209,9 @@
     font-size: 30px;
     font-family: 'Bebas Neue';
 }
+
 /* UI signin                     */
-#signinDiv {
+#signin-div {
     text-align: center;
     min-width: 200px;
     max-width: 1000px;
@@ -126,11 +220,11 @@
     font-family: 'Bebas Neue';
 }
 
-#signinDiv input[value="Annuler"] {
+#signin-div input[value="Annuler"] {
     background-color: #ffb3b3;
 }
 
-#signinDiv input[value="SIGN IN"] {
+#signin-div input[value="SIGN IN"] {
     background-color: #ff0000;
     color: white;
 }

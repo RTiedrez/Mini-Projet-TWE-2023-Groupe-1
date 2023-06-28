@@ -22,7 +22,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <head>	
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">	
 	<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
@@ -51,85 +50,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	</script>
 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-
-	<style type="text/css">
-		#logo:hover {
-			cursor: pointer;
-		}
-		#banniere {
-			background-color: rgba(0,0,0,0.6);
-			padding: 10px;
-			margin-bottom: 10px;
-			height: 100px;
-		}
-		#logo {
-			float: left;
-			margin: -14px;
-		}
-		#liens {
-			float: left;
-			margin-top: 30px;
-		}
-		.lien {
-			font-size: 25px;
-			font-weight: bold;
-			font-family: "Roboto";
-			color: #FFFFFF;
-			margin-left: 64px;
-		}
-		.selected {
-			color: #FF0000;
-		}
-		#signs {
-			position: absolute;
-			right: 0px;
-			top: 48px;
-		}
-		.sign {
-			margin-right: 64px;
-			font-size: 32px;
-			font-weight: bold;
-			font-family: "Bebas Neue";
-			padding: 8px 40px;
-			border-radius: 22px;
-			text-decoration: none;
-		}
-		#signin {
-			background-color: #FF0000;
-			color: #FFFFFF
-		}
-		#signup {
-			background-color: #FFB3B3;
-			color: #000000;
-		}
-		#menu-image:hover {
-			cursor: pointer;
-		}
-		#menu {
-			position: absolute;
-			right: 20px;
-			top: 24px;
-		}
-		.dropdown-content {
-			display: none;
-			position: absolute;
-			right: -12px;
-			background-color: #D9D9D9;
-			padding: 8px 40px;
-			border-radius: 25px;
-			z-index: 1;
-		}
-		.dropdown-content a {
-			font-family: "AnonymousPro";
-			font-size: 25;
-			font-weight: bold;
-			color: #000000;
-			padding: 10px 12px;
-			text-decoration: none;
-			min-width: 128px;
-			display: block;
-		}
-	</style>
 
 </head>
 <!-- **** F I N **** H E A D **** -->
@@ -189,7 +109,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			} else {
 				echo "<a href=\"index.php?view=coach_dashboard\">Dashboard</a>";
 			}
-			echo "<a href=\"controleur.php?action=Logout\">Se Déconnecter</a>";
+			echo "<a href=\"controleur.php?action=Logout\">Déconnexion</a>";
 			}
 		?>
 	</div>

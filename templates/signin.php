@@ -8,7 +8,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 
 if($err = valider("error")) {
-	echo "<div id=\"errDiv\" class=\"centered\">";
+	echo "<div id=\"err-div\" class=\"centered\">";
 	switch($err){
 		case "err_noPassword":
 			echo "<p>Veuillez renseigner un mot de passe</p>";
@@ -24,7 +24,7 @@ if($err = valider("error")) {
 }
 ?>
 
-<div id="signinDiv" class="rounded-box black-transparent-background centered">
+<div id="signin-div" class="rounded-box black-transparent-background centered">
 <form action="controleur.php" method="POST">
 	<input type="text" class="connection-text-input" name="login" placeholder="pseudo"/> <br/>
 	<input type="password" class="connection-text-input" name="passe" placeholder="Mot de passe"/> <br/>

@@ -9,7 +9,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 
 if($err = valider("error")) {
-	echo "<div id=\"errDiv\" class=\"centered\">";
+	echo "<div id=\"err-div\" class=\"centered\">";
 	switch($err)
 	{
 		case "err_loginUsed":
@@ -44,7 +44,7 @@ if($err = valider("error")) {
 	});
 </script>
 
-<div id="signupDiv" class="rounded-box black-transparent-background centered">
+<div id="signup-div" class="rounded-box black-transparent-background centered">
 <form action="controleur.php" method="POST">
 	<input type="text" class="connection-text-input" name="login" placeholder="pseudo"/> <br/>
 	<input type="password" class="connection-text-input" name="passe" placeholder="Mot de passe"/> <br/>
