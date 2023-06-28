@@ -21,18 +21,67 @@ session_start();
 			// Connexion //////////////////////////////////////////////////
 
 
-			case 'Connexion':
+			case 'SIGN IN':
+				$login = valider("login");
+				$passe = valider("passe");
+
 				// On verifie la presence des champs login et passe
-				if ($login = valider("login"))
-				if ($passe = valider("passe"))
-				{
-					// On verifie l'utilisateur, et on crée des variables de session si tout est OK
-					// Cf. maLibSecurisation
-					verifUser($login,$passe); 	
+				if ($login = valider("login")) {
+					if ($passe = valider("passe"))
+					{
+						// On verifie l'utilisateur, et on crée des variables de session si tout est OK
+						// Cf. maLibSecurisation
+						if(verifUser($login,$passe)){
+							if($_SESSION["isCoach"]) 
+								$qs="?view=coach";
+							else
+								$qs="?view=user";						
+						} else {
+							$qs="?view=signin&error=err_loginOrPassword";
+						}	
+					} else {
+						$qs="?view=signin&error=err_noPassword";
+					}
+				} else {
+					$qs="?view=signin&error=err_noLogin";
 				}
 
 				// On redirigera vers la page index automatiquement
 			break;
+
+			case 'SIGN UP':
+				$login = valider("login");
+				$passe = valider("passe");
+				$userType = valider("userType");//normalement il y a toujours une valeur car la radio "utilisateur" est checked
+				$confirm_passe = valider("confirm_passe");
+				//pas de login renseigné
+				if(!$login) $qs="?view=signup&error=err_noLogin";
+				//pas de mot de passe renseigné
+				else if(!$passe)	$qs="?view=signup&error=err_noPassword";
+				//tous les champs du formulaire signup ont été correctement remplis
+				else if($passe == $confirm_passe) {
+					//verification que le login n'est pas déjà utilisé par un autre utilisateur
+					if(!verifLoginBdd($login)) {
+						$isCoach = $userType == "coach" ? 1 : 0;
+						//on insère le nouvel utilisateur dans la bdd
+						ajouterUser($login,$passe,$isCoach);
+						//on met à jour les variables de session
+						verifUser($login,$passe);
+						//on le redirige vers sa page d'accueil (coach ou user)
+						if($isCoach) $qs="?view=coach";
+						else 		 $qs="?view=user";
+					} else {
+						$qs="?view=signup&error=err_loginUsed";
+					}
+				} else {
+					$qs="?view=signup&error=err_badConfirm";
+				}
+			break;
+
+			case 'Annuler': //annulation de la création de compte
+				$qs="?view=home";
+			break;
+
 			case 'Logout':
 				session_destroy();
 			break;
