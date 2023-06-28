@@ -48,6 +48,15 @@ function isCoach($idUser)
 	}
 }
 
+function verifLoginBdd($login) 
+{
+	// vérifie qu'un login existe dans la base de donnée
+	// renvoie l'id de l'utilisateur ayant ce login s'il existe
+	// renvoie false si le login n'existe pas
+	$SQL="SELECT id FROM users WHERE login='$login'";
+	return SQLGetChamp($SQL);
+}
+
 function ajouterUser($login,$passe,$isCoach)
 {
 	$SQL = "INSERT INTO users (isCoach, login, password) VALUES ($isCoach,'$login','$passe')";
