@@ -16,12 +16,6 @@ function listerUtilisateurs($classe = "both")
 {
 	// Cette fonction liste les utilisateurs de la base de données 
 	// et renvoie un tableau d'enregistrements. 
-	// Chaque enregistrement est un tableau associatif contenant les champs 
-	// id,pseudo,blacklist,couleur
-
-	// Lorsque la variable $classe vaut "both", elle renvoie tous les utilisateurs
-	// Lorsqu'elle vaut "bl", elle ne renvoie que les utilisateurs blacklistés
-	// Lorsqu'elle vaut "nbl", elle ne renvoie que les utilisateurs non blacklistés
 
 	$SQL="SELECT id,pseudo,blacklist,admin,couleur from users";
 	if ($classe == "bl") $SQL .= " WHERE blacklist=1"; // /!\ .= en PHP !!!!!
@@ -32,29 +26,6 @@ function listerUtilisateurs($classe = "both")
 
 }
 
-function interdireUtilisateur($idUser)
-{
-	// cette fonction affecte le booléen "blacklist" à vrai
-	$SQL="UPDATE users SET blacklist=1 WHERE id=$idUser";
-	SQLUpdate($SQL);
-
-	// Attention aux injections SQL !!!! Solutions :
-	// 1) On encadre les arguments client avec des apostrophes
-	// 2) On banalise les caractères spéciaux SQL cf. fonction proteger et addslashes
-	// Ex : $SQL = "UPDATE users SET blacklist=1 WHERE id='3';drop table users;''"; // Injection SQL
-	// Les pros utilisent des requêtes préparées
-}
-
-function autoriserUtilisateur($idUser)
-{
-	// cette fonction affecte le booléen "blacklist" à faux
-	$SQL="UPDATE users SET blacklist=0 WHERE id=$idUser";
-	SQLUpdate($SQL);
-
-}
-
-/********* EXERCICE 4 *********/
-
 function verifUserBdd($login,$passe)
 {
 	// Vérifie l'identité d'un utilisateur 
@@ -62,7 +33,7 @@ function verifUserBdd($login,$passe)
 	// renvoie faux si user inconnu
 	// renvoie l'id de l'utilisateur si succès
 
-	$SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe'";
+	$SQL="SELECT id FROM users WHERE login='$login' AND password='$passe'";
 
 	// $tab=parcoursRs(SQLSelect($SQL));
 	// if (count($tab) != 0) return $tab[0]["id"] else return false;
@@ -75,122 +46,31 @@ function verifUserBdd($login,$passe)
 	// on aurait du utiliser SQLSelect
 }
 
-function isAdmin($idUser)
+function verifLoginBdd($login) 
 {
-	// vérifie si l'utilisateur est un administrateur
-	$SQL="SELECT admin FROM users WHERE id='$idUser'";
+	// vérifie qu'un login existe dans la base de donnée
+	// renvoie l'id de l'utilisateur ayant ce login s'il existe
+	// renvoie false si le login n'existe pas
+
+	$SQL="SELECT id FROM users WHERE login='$login'";
 	return SQLGetChamp($SQL);
-
 }
 
-/********* EXERCICE 5 *********/
-
-function listerConversations($mode="tout")
+function isCoach($idUser)
 {
-	// Liste toutes les conversations ($mode="tout")
-	// OU uniquement celles actives  ($mode="actives"), ou inactives  ($mode="inactives")
-	switch($mode) {
-		case "tout":
-			$SQL="SELECT * FROM conversations";
-		break;
-		case "actives":
-			$SQL="SELECT * FROM conversations WHERE active=1";
-		break;
-		case "inactives":
-			$SQL="SELECT * FROM conversations WHERE active=0";
-		break;
+	// vérifie si l'utilisateur est un coach
+	$SQL="SELECT isCoach FROM users WHERE id='$idUser'";
+	$coach = SQLGetChamp($SQL);
+	if($coach && $coach == 1) {
+		return true;
+	} else {
+		return false;
 	}
-
-
-	return parcoursRs(SQLSelect($SQL));
 }
 
-function archiverConversation($idConversation)
+function ajouterUser($login,$passe,$isCoach)
 {
-	// rend une conversation inactive
-	$SQL = "UPDATE conversations SET active='0' WHERE id='$idConversation'"; 
-	SQLUpdate($SQL); 
-}
-
-function reactiverConversation($idConversation)
-{	
-	// rend une conversation active
-	$SQL = "UPDATE conversations SET active='1' WHERE id='$idConversation'"; 
-	SQLUpdate($SQL); 
-}
-
-function creerConversation($theme)
-{
-	// crée une nouvelle conversation et renvoie son identifiant
-	$SQL = "INSERT INTO conversations(theme) VALUES('$theme')"; 
+	$SQL = "INSERT INTO users (isCoach, login, password) VALUES ($isCoach,'$login','$passe')";
 	return SQLInsert($SQL);
 }
-
-function supprimerConversation($idConv)
-{
-	// supprime une conversation et ses messages
-	$SQL = "DELETE FROM messages WHERE idConversation='$idConv'";
-	SQLDelete($SQL);
-
-	$SQL = "DELETE FROM conversations WHERE id='$idConv'";
-	SQLDelete($SQL);
-
-	// NB : on aurait pu aussi demander à mysql de supprimer automatiquement
-	// les messages lorsqu'une conversation est supprimée, 
-	// en déclarant idConversation comme clé étrangère vers le champ id de la table 
-	// des conversations et en définissant un trigger
-}
-
-
-/********* EXERCICE 6 *********/
-
-function enregistrerMessage($idConversation, $idAuteur, $contenu)
-{
-	// Enregistre un message dans la base en encodant les caractères spéciaux HTML : <, > et & 
-	// pour interdire les messages HTML
-	$contenu = htmlspecialchars($contenu); // Protection contre les injections JS
-
-	$SQL = "INSERT INTO messages(contenu, idAuteur,idConversation) VALUES('$contenu','$idAuteur','$idConversation')";
-
-	return SQLInsert($SQL); 
-	
-}
-function listerMessages($idConv,$format="asso")
-{
-	// Liste les messages de cette conversation
-	// Champs à extraire : contenu, auteur, couleur 
-	// en ne renvoyant pas les utilisateurs blacklistés
-	$SQL = "SELECT m.contenu, u.pseudo, u.couleur FROM messages m INNER JOIN users u ON m.idAuteur=u.id WHERE idConversation='$idConv' AND u.blacklist=0 ORDER BY m.id ASC"; 
-
-	$tabR = parcoursRs(SQLSelect($SQL));
-	
-	if ($format == "asso")
-		return $tabR;
-	else return json_encode($tabR);  
-
-}
-
-function listerMessagesFromIndex($idConv,$index)
-{
-	// Liste les messages de cette conversation, 
-	// dont l'id est superieur à l'identifiant passé
-	// Champs à extraire : contenu, auteur, couleur 
-	// en ne renvoyant pas les utilisateurs blacklistés
-
-}
-
-function getConversation($idConv)
-{	
-	// Récupère les données de la conversation (theme, active)
-	$SQL = "SELECT theme, active FROM conversations WHERE id='$idConv'";
-	$listConversations = parcoursRs(SQLSelect($SQL));
-
-	// Attention : parcoursRS nous renvoie un tableau contenant potentiellement PLUSIEURS CONVERSATIONS
-	// Il faut renvoyer uniquement la première case de ce tableau, c'est à dire la case 0 
-	// OU false si la conversation n'existe pas
-	 
-	if (count($listConversations) == 0) return false;
-	else return $listConversations[0];
-}
-
 ?>

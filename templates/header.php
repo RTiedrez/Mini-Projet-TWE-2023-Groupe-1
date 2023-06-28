@@ -21,6 +21,9 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 	<title>Gigachad Workout</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+	<script src="js/jquery-3.7.0.min.js"></script>
 </head>
 <!-- **** F I N **** H E A D **** -->
 
@@ -30,19 +33,26 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 <div id="banniere">
 
-<div id="logo">
+<!-- <div id="logo">
 <img src="ressources/ec-lille.png" alt="Logo de Centrale Lille"/>
-</div>
+</div> -->
 
 <a href="index.php?view=home">Home</a>
-<a href="index.php?view=user">User</a>
 
 <?php
 // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
-if (!valider("connecte","SESSION"))
-	echo "<a href=\"index.php?view=signin\">Se connecter</a>";
+if (!valider("connecte","SESSION")) {
+	echo "<a href=\"index.php?view=signin\">SIGN IN</a>";
+	echo " ";
+	echo "<a href=\"index.php?view=signup\">SIGN UP</a>";
+} else {
+	if($_SESSION['isCoach'])
+		echo "<a href=\"index.php?view=coach\">Coach</a>";
+	else
+		echo "<a href=\"index.php?view=user\">User</a>";
+	echo " ";
+	echo "<a href=\"controleur.php?action=Logout\">Se déconnecter</a>";
+}
 ?>
-
-<h1 id="stitre"> Chat TWE 2023 </h1>
 
 </div>
