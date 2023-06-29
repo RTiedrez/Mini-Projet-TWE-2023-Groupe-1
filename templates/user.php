@@ -28,6 +28,7 @@ $idUser = valider("idUser","SESSION");
       text-align: center;
       border-radius: 10px;
       margin: 5px;
+      display: inline-block;
     }
     .page{
       border-radius: 19px;
