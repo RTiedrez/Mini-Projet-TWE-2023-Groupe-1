@@ -52,10 +52,7 @@
 		$id = SQLGetChamp($SQL);
 		
 		// Suppression de la demande
-		$SQL = "DELETE FROM requests WHERE idUser = $id"; // ajouter idCoach
-		echo $name;
-		die();
-		
+		$SQL = "DELETE FROM requests WHERE idUser = $id"; // ajouter idCoach		
 		SQLDelete($SQL);
 	}
 
