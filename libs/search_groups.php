@@ -11,7 +11,7 @@
 	if ($action == "list") {
 
 		// Création de la requête
-		$SQL = "SELECT name FROM groups"; // ajouter idCoach
+		$SQL = "SELECT * FROM groups"; // ajouter idCoach
 		
 		// Exécution de le requête
 		$result = parcoursSel(SQLSelect($SQL), "name");
