@@ -48,4 +48,9 @@ function ajouterUser($login,$passe,$isCoach)
 	$SQL = "INSERT INTO users (isCoach, login, password) VALUES ($isCoach,'$login','$passe')";
 	return SQLInsert($SQL);
 }
+
+function SendInvitation($idUser,$idCoach){
+    $SQL = "INSERT INTO requests (idUser, idCoach) VALUES ($idUser,$idCoach);";
+    return SQLInsert($SQL);
+}
 ?>

@@ -83,6 +83,15 @@ session_start();
 				}
 			break;
 
+			case 'Send':
+				if($idCoach = valider("idCoach")) {
+					$idUser = $_SESSION["idUser"];
+					//on envoie une invitation au coach
+					SendInvitation($idUser,$idCoach);
+				}
+				$qs="?view=user";
+				break;
+
 			case 'Annuler': // annulation de la création de compte
 				$qs="?view=home";
 			break;

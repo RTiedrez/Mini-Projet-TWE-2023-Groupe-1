@@ -1,8 +1,11 @@
 <!-- Auteur : Oussama Mounajjim -->
+<!-- Petites révisions par Roman Tiedrez -->
+
 <style src="css/style.css"></style>
 
 <?php
 include_once("libs/user_functions.php");
+include_once("libs/maLibForms.php");
 
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
@@ -111,18 +114,7 @@ if(isset($_POST ['start'])){
 // echo getLastActivity(7)[]
 ?>
 </div>
-  <div id="coach-user" class="form" >
-  <?php
-  echo "Your coach: ";
-  if (empty(getCoach($idUser))){
-    echo "<h2>You don't have any coach yet.</h2><br>";
-  } else {
-  $coach=getCoach($idUser)[0]['login'];
-  echo $coach;
-
-  } 
-  ?>
-  </div></div>
+  </div>
   <div id="today-workout" class="form" >
   <?php
       echo "<h1>Today's workout</h1><br>";
@@ -142,23 +134,22 @@ if(isset($_POST ['start'])){
 </div>
 <div id="requete-coach" class="form">
   <?php 
-  echo "<h1>Request a coach</h1><br>";
-    if(!UserCoach($idUser)) {
-      echo '<form method=\"post\"><select name=\"invitation\">';
-      $listCoachs=getListCoach();
-      foreach($listCoachs as $coach) {
-        $name_coach=$coach['login'];
-        echo "<option >$name_coach</option>";
-      }
+    if(!getCoach($idUser)) {
+     if(!hasSentRequest($idUser)){
+      echo "<h1>Request a coach</h1><br>";
+      echo '<form action=controleur.php method=post name=invitation>';
+      mkSelect("idCoach",getListCoach(),"id","login");
       echo "</select><br><br>";
-      echo "<input type=button name=action value=Send></form>";   
-/*       if(isset($_POST['invitation'])){
-        $idCoach=$_POST['invitation'];
-        echo("<script>alert($idCoach)</script>");
-        // SendInvitation($idUser,$idCoach);
-      }  */
-      
+      echo "<input type=\"submit\" name=\"action\" value=\"Send\"></form>";
+    } else if (hasSentRequest($idUser)) {
+      echo "<h1>Request sent</h1><br>";
+      echo "<h2>Waiting for coach's answer</h2><br>";
     }
+  } else {
+    echo "Your coach: ";
+    echo "<h2>".getCoach($idUser)."</h2><br>";
+  }
+
     ?>
 
 

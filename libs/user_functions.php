@@ -1,4 +1,5 @@
 <!-- Auteur : Oussama Mounajjim -->
+<!-- Petites révisions par Roman Tiedrez -->
 <?php
 
 include_once("maLibSQL.pdo.php");
@@ -37,11 +38,17 @@ function UserCoach($idUser){
     }
     return False;
 }
-function getCoach($idUser){
+/* function getCoach($idUser){
     if (empty(getGroup($idUser))) return [];
     $idGroup=getGroup($idUser)[0]['idGroup'];
     $SQL = "SELECT users.login FROM users, `groupes` WHERE `groupes`.id = $idGroup and users.isCoach = 1 AND users.id = `groupes`.idCoach";
     $result = parcoursRs(SQLSelect($SQL));
+    return $result;
+} */
+
+function getCoach($idUser){
+    $SQL = "SELECT uu.`login` FROM users u, users uu WHERE u.id='$idUser' AND u.idCoach=uu.id;";
+    $result = SQLGetChamp($SQL);
     return $result;
 }
 
@@ -55,18 +62,18 @@ function getListExercices($idUser){
     return $result;
 }
 
-
-
 function getListCoach(){
-    $SQL="SELECT `login` FROM users WHERE isCoach=1 ;";
+    $SQL="SELECT `login`,id FROM users WHERE isCoach=1 ;";
     $result=parcoursRs(SQLSelect($SQL));
     return $result;
 }
 
-function SendInvitation($idUser,$idCoach){
-    $SQL = "INSERT INTO requests (idUser, idCoach) VALUES ($idUser,$idCoach);";
-    return SQLInsert($SQL);
+function hasSentRequest($idUser) {
+    $SQL = "SELECT idUser FROM requests WHERE idUser = '$idUser'";
+    $result = SQLGetChamp($SQL);
+    return $result;
 }
+
 // print_r(getListExercices($idUser));
 
 
