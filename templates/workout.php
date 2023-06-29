@@ -26,7 +26,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
   }
   if (empty($listExercices))
   {
-    echo "<h2>No exercices founded</h2><br>";
+    echo "<h2>No exercices found</h2><br>";
   }
   ?>
 </div>

@@ -128,7 +128,7 @@ if(isset($_POST ['start'])){
   }
   if (empty($listExercices))
   {
-    echo "<h2>No exercices founded</h2><br>";
+    echo "<h2>No exercices found</h2><br>";
   }
   ?>
 </div>
@@ -137,7 +137,7 @@ if(isset($_POST ['start'])){
 
 <?php
 $i=1;
-$title_exercice="NO EXERCICE IS FOUNDED";
+$title_exercice="NO EXERCICE IS FOUND";
 $duration="00:00:00";
 $listexercices = getListExercices($idUser);
 if (empty(getListExercices($idUser))){
