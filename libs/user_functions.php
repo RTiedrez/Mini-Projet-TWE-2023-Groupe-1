@@ -31,7 +31,12 @@ function getLastActivity($idUser){
 
 
 // print_r(getLastActivity($idUser));
-
+function UserCoach($idUser){
+    if(!empty(getCoach($idUser))){
+        return True;
+    }
+    return False;
+}
 function getCoach($idUser){
     if (empty(getGroup($idUser))) return [];
     $idGroup=getGroup($idUser)[0]['idGroup'];
@@ -50,6 +55,18 @@ function getListExercices($idUser){
     return $result;
 }
 
+
+
+function getListCoach(){
+    $SQL="SELECT login FROM users WHERE isCoach=1 ;";
+    $result=parcoursRs(SQLSelect($SQL));
+    return $result;
+}
+
+function SendInvitation($idUser,$idCoach){
+    $SQL = "INSERT into requests (idUser, idCoach) values ($idUser,$idCoach);";
+    return SQLInsert($SQL);
+}
 // print_r(getListExercices($idUser));
 
 
