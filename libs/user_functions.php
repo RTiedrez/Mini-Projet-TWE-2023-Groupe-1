@@ -1,3 +1,4 @@
+<!-- Auteur : Oussama Mounajjim -->
 <?php
 
 include_once("maLibSQL.pdo.php");
