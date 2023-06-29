@@ -1,4 +1,9 @@
 <?php
+	// Mini projet TWE 2023 - Groupe 1
+	// Fichier réalisé par Jules Dumezy
+
+	// Récupération de la session
+	session_start();
 
 	// Inclusion des librairies
 	include_once("maLibSQL.pdo.php");
@@ -6,12 +11,15 @@
 
 	// Récupération de l'action
 	$action = $_POST['action'];
+	
+	// Récupération de l'id du coach
+	$idCoach = $_SESSION["idUser"];
 
 	// Si une liste est demandée
 	if ($action == "list") {
 
 		// Création de la requête
-		$SQL = "SELECT name FROM groupes"; // ajouter idCoach
+		$SQL = "SELECT name FROM groupes WHERE idCoach = $idCoach";
 		
 		// Exécution de le requête
 		$result = parcoursSel(SQLSelect($SQL), "name");
@@ -148,7 +156,7 @@
 		}
 		
 		// Création du groupe
-		$SQL = "INSERT INTO groupes (idCoach, name) VALUES (1, \"$name\")"; //ajouter id coach	
+		$SQL = "INSERT INTO groupes (idCoach, name) VALUES ($idCoach, \"$name\")";
 		$id = SQLInsert($SQL);
 		
 		// Ajout des utilisateurs

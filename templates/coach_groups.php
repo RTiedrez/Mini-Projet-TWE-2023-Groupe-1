@@ -26,17 +26,17 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	
 	<div id="editor">
 		<div id="name-editor"></div>
-		<div id="user-list">
-			<ul id="left-list" class="sortable-list">
-			</ul>
+		<div id=grid>
+			<div id="user-list">
+				<ul id="left-list" class="sortable-list"></ul>
+			</div>
+			<div id="group-editor">
+				<ul id="right-list" class="sortable-list"></ul>
+			</div>
 		</div>
-		<div id="group-editor">
-			<ul id="right-list" class="sortable-list">
-			</ul>
-			<input id=val type=button value=Validate>
-			<input id=del type=button value=Delete>
-			<input id=can type=button value=Cancel>
-		</div>
+		<input id=val type=button value=Validate>
+		<input id=del type=button value=Delete>
+		<input id=can type=button value=Cancel>
 	</div>
 	
 	<div id="left" class="column"></div>

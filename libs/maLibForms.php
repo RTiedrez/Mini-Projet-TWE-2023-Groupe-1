@@ -132,7 +132,7 @@
 
 	// Affichage de la barre permettant l'ajout d'un exercice dans un workout
 	function showAddWorkout($tab) {
-		$s = "<hr/><select name=\"Exercise\" id=\"add-exercise\">";
+		$s = "<select name=\"Exercise\" id=\"add-exercise\">";
 		if ($tab) {
 			foreach($tab as $t) {
 				$s .= "<option value=\"$t\">$t</option>";
@@ -140,7 +140,7 @@
 		}
 		$s .= "</select>";
 		$s .= "<input id=\"add-duration\" type=text required pattern=\"[0-9]{2}:[0-9]{2}:[0-9]{2}\" value=\"00:00:00\">";
-		$s .= "<input id=add type=button value=+><hr/>";
+		$s .= "<input id=add type=button value=+>";
 		return $s;
 	}
 	

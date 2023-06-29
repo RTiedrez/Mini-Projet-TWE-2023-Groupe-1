@@ -1,4 +1,6 @@
 <?php
+	// Mini projet TWE 2023 - Groupe 1
+	// Fichier réalisé par Jules Dumezy
 
 	// Inclusion des librairies
 	include_once("maLibSQL.pdo.php");
@@ -12,7 +14,7 @@
 	if ($action == "list") {
 		
 		// Création de la requête
-		$SQL = "SELECT * FROM exercises"; // ajouter idCoach
+		$SQL = "SELECT * FROM exercises";
 		
 		// Exécution de le requête
 		$result = parcoursSel(SQLSelect($SQL), "title");
@@ -84,7 +86,10 @@
 				$media = false;
 			}
 			
-			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", fichier = \"$path\" WHERE id = $id";
+			$SQL = "UPDATE exercises SET title = \"$name\",
+										description = \"$desc\",
+										fichier = \"$path\"
+										WHERE id = $id";
 		}
 		// Si aucun fichier n'a été passé en argument
 		else {
@@ -92,9 +97,14 @@
 			$path = SQLGetChamp($SQL);
 			$media = $_POST['media'];
 			if ($path == $media) {
-				$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\" WHERE id = $id";
+				$SQL = "UPDATE exercises SET title = \"$name\",
+											description = \"$desc\"
+											WHERE id = $id";
 			}
-			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", fichier = NULL WHERE id = $id";
+			$SQL = "UPDATE exercises SET title = \"$name\",
+										description = \"$desc\",
+										fichier = NULL
+										WHERE id = $id";
 		}
 
 		SQLUpdate($SQL);
@@ -125,10 +135,12 @@
 		
 		// Création de l'exercice
 		if ($media) {
-			$SQL = "INSERT INTO exercises (title, description, fichier) VALUES (\"$name\", \"$desc\", \"$path\")"; //ajouter id coach
+			$SQL = "INSERT INTO exercises (title, description, fichier)
+									VALUES (\"$name\", \"$desc\", \"$path\")";
 		}
 		else {
-			$SQL = "INSERT INTO exercises (title, description) VALUES (\"$name\", \"$desc\")";
+			$SQL = "INSERT INTO exercises (title, description)
+									VALUES (\"$name\", \"$desc\")";
 		}
 		SQLInsert($SQL);
 	}

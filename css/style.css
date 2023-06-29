@@ -236,3 +236,146 @@ body {
     background-color: #ff0000;
     color: white;
 }
+
+/* UI coach */
+
+#content {
+	background-color: rgba(0,0,0,.8);
+	padding:10px;
+	margin-top:10px;
+	color: white;
+	font-family: "Roboto";
+}
+
+.empty {
+	font-style: italic;
+}
+
+.item, .sort-item, .item-selected, #group, #workout, #exercise, #editor {
+	background-color:rgb(200,200,200,.9);
+	color:black;
+	padding:5px;
+	margin:5px;
+}
+
+#grid{
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap:5px;
+}
+
+.item {
+	display:flex;
+}
+
+.images {
+	margin-left:auto;
+}
+
+.item, .item-selected, .sort-item {
+	cursor:pointer;
+}
+
+.item-selected {
+	border: solid 3px red;
+}
+
+.item-add {
+	font-weight: bold;
+	background-color:red;
+	color:white;
+	padding:5px;
+	margin:5px;
+	cursor:pointer;
+}
+
+.column {
+	float: left;
+	border:5px;
+	width: 50%;
+}
+
+#name-workout, #name-editor, #search-bar {
+	font-weight: bold;
+	background-color:red;
+	padding:10px;
+	color:white;
+	margin-bottom:10px;
+}
+
+.big-item {
+	cursor:pointer;
+	border: 2px solid black;
+	padding:5px;
+	margin:5px;
+	display:flex;
+	align-items:center;
+}
+
+.big-item p, .big-item input {
+	margin-left:10px;
+}
+
+#content input, #content select, #content textarea {
+	font-family: "Roboto";
+	background-color:white;
+	border:none;
+	outline:none;
+	padding: 5px 10px;
+	font-size: 15px;
+}
+
+#workout-add {
+	padding:5px;
+	margin:5px;
+	border: 2px solid red;
+}
+
+#workout-add input, #workout-add select {
+	margin:10px;
+}
+
+#user-list, #group-editor {
+	padding:10px;
+	margin:10px;
+	background-color:rgb(20,20,20);
+	padding-left:0;
+}
+
+#left-list, #right-list {
+	min-height:50vh;
+}
+
+#property-editor, #media {
+	min-height:30vh;
+	padding:10px;
+	margin:10px;
+	background-color:rgb(20,20,20);
+	color:white;
+}
+
+#property-editor input, #property-editor textarea {
+	size:relative;
+	margin:5px;
+	padding:5px;
+	width:95%;
+}
+
+#property-editor textarea {
+	min-height:30vh;
+}
+
+#drop-zone {
+	background-color:rgb(240,240,240);
+	border:solid 2px darkgrey;
+	border-radius:10px;
+	padding:10px;
+	margin:10px;
+	min-height:20vh;
+	height:70%;
+	color:black;
+}
+
+#exercise img {
+	max-width:100%;
+}

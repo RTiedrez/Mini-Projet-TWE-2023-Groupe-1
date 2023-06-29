@@ -1,4 +1,9 @@
 <?php
+	// Mini projet TWE 2023 - Groupe 1
+	// Fichier réalisé par Jules Dumezy
+
+	// Récupération de la session
+	session_start();
 
 	// Inclusion des librairies
 	include_once("maLibSQL.pdo.php");
@@ -7,12 +12,15 @@
 
 	// Récupération de l'action
 	$action = $_POST['action'];
+	
+	// Récupération de l'id du coach
+	$idCoach = $_SESSION["idUser"];
 
 	// Si une liste est demandée
 	if ($action == "list") {
 		
 		// Création de la requête
-		$SQL = "SELECT name FROM workouts"; // ajouter idCoach
+		$SQL = "SELECT name FROM workouts WHERE idCoach = $idCoach";
 		
 		// Exécution de le requête
 		$result = parcoursSel(SQLSelect($SQL), "name");
@@ -83,7 +91,7 @@
 		$exercises = $_POST['exercises'];
 		
 		// Récupération des id des nouveaux exercices
-		$SQL = "SELECT id FROM workouts WHERE name = \"$oName\"";
+		$SQL = "SELECT id FROM workouts WHERE name = \"$oName\" AND idCoach = $idCoach";
 		$id = SQLGetChamp($SQL);
 		$idExercises = array();
 		
@@ -173,7 +181,7 @@
 		}
 		
 		// Création du workout
-		$SQL = "INSERT INTO workouts (idCoach, name) VALUES (1, \"$name\")"; //ajouter id coach	
+		$SQL = "INSERT INTO workouts (idCoach, name) VALUES ($idCoach, \"$name\")";
 		$id = SQLInsert($SQL);
 		
 		// Ajout des exercices
@@ -194,7 +202,7 @@
 		$name = $_POST['name'];
 		
 		// Récupération de l'id du workout
-		$SQL = "SELECT id FROM workouts WHERE name = '$name'";
+		$SQL = "SELECT id FROM workouts WHERE name = \"$name\" AND idCoach = $idCoach";
 		$id = SQLGetChamp($SQL);
 		
 		// Suppression du workout
