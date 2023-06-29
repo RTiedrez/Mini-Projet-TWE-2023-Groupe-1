@@ -1,4 +1,9 @@
 <?php
+	// Mini projet TWE 2023 - Groupe 1
+	// Fichier réalisé par Jules Dumezy
+
+	// Récupération de la session
+	session_start();
 
 	// Inclusion des librairies
 	include_once("maLibSQL.pdo.php");
@@ -7,16 +12,18 @@
 	// Récupération des variables
 	$action = $_POST["action"];
 	$name = $_POST["name"];
+	
+	// Récupération de l'id du coach
+	$idCoach = $_SESSION["idUser"];
 
 	// Si une liste est demandée
 	if ($action == "list") {
 
 		// Création de la requête
-		$SQL = "SELECT nomUser FROM v_requests"; // ajouter idCoach
+		$SQL = "SELECT nomUser FROM v_requests WHERE idCoach = $idCoach";
 
 		if ($name != "") {
-			$SQL .= " WHERE nomUser LIKE ";
-			$SQL .= "'$name%'";
+			$SQL .= " AND nomUser LIKE \"$name%\"";
 		}
 		
 		// Exécution de la requête
@@ -34,13 +41,13 @@
 		$id = SQLGetChamp($SQL);
 		
 		// Ajout du coach à l'utilisateur
-		$SQL = "UPDATE users SET idCoach = 1";// ajouter idCoach
+		$SQL = "UPDATE users SET idCoach = $idCoach";
 		//$SQL .= $_SESSION[];
 		$SQL .= " WHERE id = '$id'";
 		SQLUpdate($SQL);
 		
 		// Suppression de la demande
-		$SQL = "DELETE FROM requests WHERE idUser=$id"; // ajouter idCoach
+		$SQL = "DELETE FROM requests WHERE idUser = $id AND idCoach = $idCoach";
 		SQLDelete($SQL);
 	}
 
@@ -52,7 +59,7 @@
 		$id = SQLGetChamp($SQL);
 		
 		// Suppression de la demande
-		$SQL = "DELETE FROM requests WHERE idUser = $id"; // ajouter idCoach		
+		$SQL = "DELETE FROM requests WHERE idUser = $id AND idCoach = $idCoach";		
 		SQLDelete($SQL);
 	}
 

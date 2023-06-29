@@ -22,7 +22,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 <div id="content">
 	<h1>Dashboard</h1>
-	Chercher un de mes élèves : <input type="text" id="search-user">
+	<div id="search-bar">
+		Look for a trainee : <input type="text" id="search-user">
+	</div>
 	<img id="img-load" src="./ressources/ajaxLoader2.gif"/>
 	<div id="search-results"></div>
 </div>

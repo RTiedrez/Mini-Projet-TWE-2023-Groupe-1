@@ -22,7 +22,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 <div id="content">
 	<h1>Requests</h1>
-	Chercher un demandeur : <input type="text" id="search-requesters">
+	<div id="search-bar">
+		Look for a request : <input type="text" id="search-requesters">
+	</div>
 	<img id="img-load" src="ressources/ajaxLoader2.gif"/>
 	<div id="search-results"></div>
 

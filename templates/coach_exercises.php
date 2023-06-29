@@ -24,12 +24,13 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	<h1>Exercises</h1>
 	
 	<div id="editor">
-		<div id="property-editor"></div>
-		<div id="media">
-			<div id="drop-zone">Drop an image or a video</div>
-			<input id=rem type=button value=Remove>
+		<div id=grid>
+			<div id="property-editor"></div>
+			<div id="media">
+				<div id="drop-zone">Drop an image or a video</div>
+				<input id=rem type=button value=Remove>
+			</div>
 		</div>
-		
 		<input id=val type=button value=Validate>
 		<input id=del type=button value=Delete>
 		<input id=can type=button value=Cancel>

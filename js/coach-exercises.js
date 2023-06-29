@@ -95,6 +95,7 @@ function addExercise() {
 		processData: false,
 		contentType: false,
 		success: function(result) {
+			console.log(result);
 		}
 	});
 	
