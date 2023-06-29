@@ -143,6 +143,7 @@ if(isset($_POST ['start'])){
 </div>
 <div id="requete-coach" class="form">
   <?php 
+  echo "<h1>Request a coach</h1><br>";
     if(!UserCoach($idUser)){
       echo '<form method="post"><select name="invitation">';
       $listCoachs=getListCoach();
