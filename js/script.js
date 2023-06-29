@@ -12,9 +12,4 @@ function colorierLiens() {
         $("#dropdown").toggle();
     });
 
-    // Cliquer sur le logo redirige vers l'accueil
-    $("#logo").click(function() {
-        window.location.href = "index.php?view=home";
-    });
-
 }

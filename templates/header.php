@@ -35,6 +35,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 			colorierLiens();
 
+			// Cliquer sur le logo redirige vers l'accueil
+			$("#logo").click(function() {
+			window.location.href = "index.php?view=home";
+			});
+
 		});
 	</script>
 
