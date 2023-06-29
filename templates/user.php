@@ -10,6 +10,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	die("");
 }
 
+$idUser = valider("idUser","SESSION");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,11 +86,13 @@ if(isset($_POST ['start'])){
 </div>
   <div id="coach-user" class="form" >
   <?php
-  $coach=getCoach($idUser)[0]['login'];
-  if (empty($coach)){
+  if (empty(getCoach($idUser))){
     echo "<h2>You don't have any coach yet.</h2><br>";
-}
+  } else {
+  $coach=getCoach($idUser)[0]['login'];
   echo $coach;
+
+  } 
   ?>
   </div></div>
   <div id="today-workout" class="form" >

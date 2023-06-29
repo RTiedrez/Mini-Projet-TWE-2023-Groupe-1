@@ -5,14 +5,12 @@ include_once("maLibSQL.pdo.php");
 include_once("modele.php");
 include("config.php");
 
-$idUser=7;
 function getGroup($idUser){
     $SQL = "SELECT idGroup FROM user_group WHERE idUser = $idUser LIMIT 1";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }
 
-$idUser = 7;
 // print_r(getGroup($idUser));
 // echo getGroup(7)[0]['idGroup'];
 
@@ -35,6 +33,7 @@ function getLastActivity($idUser){
 // print_r(getLastActivity($idUser));
 
 function getCoach($idUser){
+    if (empty(getGroup($idUser))) return [];
     $idGroup=getGroup($idUser)[0]['idGroup'];
     $SQL = "SELECT users.login FROM users, `groupes` WHERE `groupes`.id = $idGroup and users.isCoach = 1 and users.id = `groupes`.idCoach";
     $result = parcoursRs(SQLSelect($SQL));
@@ -44,6 +43,7 @@ function getCoach($idUser){
 // print_r(getCoach($idUser));
 
 function getListExercices($idUser){
+    if (empty(getGroup($idUser))) return [];
     $idGroup = getGroup($idUser)[0]['idGroup'];
     $SQL = "SELECT exercises.title, workout_exercise.duration FROM exercises, `workout_exercise`, `group_workout` WHERE group_workout.date < CURDATE() and group_workout.idWorkout = workout_exercise.idWorkout and workout_exercise.idExercise = exercises.id and group_workout.idGroup = $idGroup";
     $result = parcoursRs(SQLSelect($SQL));
