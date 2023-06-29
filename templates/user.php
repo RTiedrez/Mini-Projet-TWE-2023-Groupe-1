@@ -19,9 +19,6 @@ $idUser = valider("idUser","SESSION");
     
   </head>
   <style>
-    body {
-      overflow: hidden;
-    }
     .form{
       background-color: black;  
       opacity: 0.8;
