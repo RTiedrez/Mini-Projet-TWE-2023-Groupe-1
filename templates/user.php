@@ -147,7 +147,7 @@ if(isset($_POST ['start'])){
     }
   } else {
     echo "Your coach: ";
-    echo "<h2>".getCoach($idUser)[0]['login']."</h2><br>";
+    echo "<h2>".getCoach($idUser)."</h2><br>";
   }
 
     ?>
