@@ -1,25 +1,25 @@
 <?php
 
-include_once("maLibSQL.pdo.php");
-include_once("maLibForms.php");
-include_once("modele.php");
+	// Inclusion des librairies
+	include_once("maLibSQL.pdo.php");
+	include_once("maLibForms.php");
 
-$name = $_POST['name'];
+	// Récupération des variables
+	$name = $_POST['name'];
 
+	// Création de la requête
+	if ($name == "") {
+		$SQL = "SELECT login FROM users";
+	}
+	else {
+		$SQL = "SELECT login FROM users WHERE login LIKE \"$name%\"";
+	}
 
-$SQL = "SELECT login FROM users";
+	// Exécution de la requête
+	$result = parcoursSel(SQLSelect($SQL), "login");
 
-if ($name == "") {
-	$SQL = "SELECT login FROM users";
-}
-else {
-	$SQL = "SELECT login FROM users WHERE login LIKE ";
-	$SQL .= "'$name%'";
-}
-
-$result = parcoursRs(SQLSelect($SQL));
-
-echo showEntry($result, "user", "login");
+	// Affichage du résultat
+	echo showEntry($result, "dashboard");
 
 ?>
 

@@ -1,46 +1,63 @@
 <?php
 
-include_once("maLibSQL.pdo.php");
-include_once("maLibForms.php");
-include_once("modele.php");
+	// Inclusion des librairies
+	include_once("maLibSQL.pdo.php");
+	include_once("maLibForms.php");
 
-$action = $_POST['action'];
-$name = $_POST['name'];
+	// Récupération des variables
+	$action = $_POST["action"];
+	$name = $_POST["name"];
 
-if ($action == "list") {
-	$SQL = "SELECT nomUser FROM v_requests"; // ajouter idCoach
+	// Si une liste est demandée
+	if ($action == "list") {
 
-	if ($name != "") {
-		$SQL .= " WHERE nomUser LIKE ";
-		$SQL .= "'$name%'";
+		// Création de la requête
+		$SQL = "SELECT nomUser FROM v_requests"; // ajouter idCoach
+
+		if ($name != "") {
+			$SQL .= " WHERE nomUser LIKE ";
+			$SQL .= "'$name%'";
+		}
+		
+		// Exécution de la requête
+		$result = parcoursSel(SQLSelect($SQL), "nomUser");
+		
+		// Affichage du résultat
+		echo showEntry($result, "request");
 	}
 
-	$result = parcoursRs(SQLSelect($SQL));
+	// Si une demande doit être acceptée
+	if ($action == "accept") {
+		
+		// Récupération de l'id de l'utilisateur
+		$SQL = "SELECT id FROM users WHERE login = '$name'";
+		$id = SQLGetChamp($SQL);
+		
+		// Ajout du coach à l'utilisateur
+		$SQL = "UPDATE users SET idCoach = 1";// ajouter idCoach
+		//$SQL .= $_SESSION[];
+		$SQL .= " WHERE id = '$id'";
+		SQLUpdate($SQL);
+		
+		// Suppression de la demande
+		$SQL = "DELETE FROM requests WHERE idUser=$id"; // ajouter idCoach
+		SQLDelete($SQL);
+	}
 
-	echo showEntry($result, "requester", "nomUser");
-}
-
-if ($action == "accept") {
-	$SQL = "SELECT id FROM users WHERE login = '$name'";
-	$id = SQLGetChamp($SQL);
-	
-	$SQL = "UPDATE users SET idCoach = 1";// ajouter idCoach
-	//$SQL .= $_SESSION[];
-	$SQL .= " WHERE id = '$id'";
-	SQLUpdate($SQL);
-	
-	$SQL = "DELETE FROM requests WHERE idUser=$id"; // ajouter idCoach
-	SQLDelete($SQL);
-}
-
-if ($action == "decline") {
-	
-	$SQL = "SELECT id FROM users WHERE login = '$name'";
-	$id = SQLGetChamp($SQL);
-	
-	$SQL = "DELETE FROM requests WHERE idUser=$id"; // ajouter idCoach
-	SQLDelete($SQL);
-}
+	// Si une demande doit être refusée
+	if ($action == "decline") {
+		
+		// Récupération de l'id de l'utilisateur
+		$SQL = "SELECT id FROM users WHERE login = '$name'";
+		$id = SQLGetChamp($SQL);
+		
+		// Suppression de la demande
+		$SQL = "DELETE FROM requests WHERE idUser = $id"; // ajouter idCoach
+		echo $name;
+		die();
+		
+		SQLDelete($SQL);
+	}
 
 ?>
 

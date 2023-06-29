@@ -183,9 +183,9 @@ function parcoursRs($result)
 	return $tab;
 }
 
-
 function parcoursSel($result, $key)
 {
+	if  ($result == false) return array();
 	$tab = parcoursRs($result);
 	$extract = array();
 	foreach($tab as $t) {
