@@ -109,6 +109,29 @@ if(isset($_POST ['start'])){
     }
   }
   ?>
+
+</div>
+<div id="requete-coach" class="form">
+  <?php 
+    if(!UserCoach($idUser)){
+      echo '<form method="post"><select name="invitation">';
+      $listCoachs=getListCoach();
+      foreach( $listCoachs as $coach){
+        $name_coach=$coach['login'];
+        echo "<option >$name_coach</option>";
+      }
+      echo "</select><br><br>";
+      echo "<input type='submit' name='invitation'></form>";   
+      if(isset($_POST['invitation'])){
+        $idCoach=$_POST['invitation'];
+        echo("<script>alert($idCoach)</script>");
+        // SendInvitation($idUser,$idCoach);
+      } 
+      
+    }
+    ?>
+
+
 </div></div>
 </div>
 <center>
@@ -132,27 +155,7 @@ if(isset($_POST ['start'])){
   }
   ?>
 </div>
-<div id="requete-coach">
-  <?php 
-    if(!UserCoach($idUser)){
-      echo '<select name="invitation">';
-      $listCoachs=getListCoach();
-      foreach( $listCoachs as $coach){
-        $name_coach=$coach[0]['login'];
-        echo "<option >$name_coach</option>";
-        echo "</select>";
-      }
-      echo "<input type='submit' name='invitation'>";   
-      if(isset($_POST['invitation'])){
-        $idCoach=$_POST['invitation'];
-        SendInvitation($idUser,$idCoach);
-      } 
-      
-    }
-    ?>
 
-
-</div>
 </div>
 <div id="exercice-page"  class="form">
 
