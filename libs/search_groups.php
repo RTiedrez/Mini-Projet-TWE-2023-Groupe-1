@@ -11,7 +11,7 @@
 	if ($action == "list") {
 
 		// Création de la requête
-		$SQL = "SELECT * FROM groups"; // ajouter idCoach
+		$SQL = "SELECT name FROM groupes"; // ajouter idCoach
 		
 		// Exécution de le requête
 		$result = parcoursSel(SQLSelect($SQL), "name");
@@ -90,7 +90,7 @@
 		$users = $_POST['users'];
 		
 		// Récupération des id des utilisateurs
-		$SQL = "SELECT id FROM groups WHERE name = \"$oName\"";
+		$SQL = "SELECT id FROM groupes WHERE name = \"$oName\"";
 		$id = SQLGetChamp($SQL);
 		$idUsers = array();
 		
@@ -101,7 +101,7 @@
 		
 		// Mise à jour du nom du groupe
 		if ($oName != $name) {
-			$SQL = "UPDATE groups SET name = \"$name\" WHERE id = $id";	
+			$SQL = "UPDATE groupes SET name = \"$name\" WHERE id = $id";	
 			SQLUpdate($SQL);
 		}
 		
@@ -148,7 +148,7 @@
 		}
 		
 		// Création du groupe
-		$SQL = "INSERT INTO groups (idCoach, name) VALUES (1, \"$name\")"; //ajouter id coach	
+		$SQL = "INSERT INTO groupes (idCoach, name) VALUES (1, \"$name\")"; //ajouter id coach	
 		$id = SQLInsert($SQL);
 		
 		// Ajout des utilisateurs
@@ -166,11 +166,11 @@
 		$name = $_POST['name'];
 		
 		// Récupération de l'id du groupe
-		$SQL = "SELECT id FROM groups WHERE name = '$name'";
+		$SQL = "SELECT id FROM groupes WHERE name = '$name'";
 		$id = SQLGetChamp($SQL);
 		
 		// Suppresion du groupe
-		$SQL = "DELETE FROM groups WHERE id=$id";
+		$SQL = "DELETE FROM groupes WHERE id=$id";
 		SQLDelete($SQL);
 	}
 

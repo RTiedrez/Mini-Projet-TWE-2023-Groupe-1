@@ -84,17 +84,17 @@
 				$media = false;
 			}
 			
-			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", file = \"$path\" WHERE id = $id";
+			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", fichier = \"$path\" WHERE id = $id";
 		}
 		// Si aucun fichier n'a été passé en argument
 		else {
-			$SQL = "SELECT file FROM exercises WHERE id = \"$id\"";
+			$SQL = "SELECT fichier FROM exercises WHERE id = \"$id\"";
 			$path = SQLGetChamp($SQL);
 			$media = $_POST['media'];
 			if ($path == $media) {
 				$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\" WHERE id = $id";
 			}
-			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", file = NULL WHERE id = $id";
+			$SQL = "UPDATE exercises SET title = \"$name\", description = \"$desc\", fichier = NULL WHERE id = $id";
 		}
 
 		SQLUpdate($SQL);
@@ -125,7 +125,7 @@
 		
 		// Création de l'exercice
 		if ($media) {
-			$SQL = "INSERT INTO exercises (title, description, file) VALUES (\"$name\", \"$desc\", \"$path\")"; //ajouter id coach
+			$SQL = "INSERT INTO exercises (title, description, fichier) VALUES (\"$name\", \"$desc\", \"$path\")"; //ajouter id coach
 		}
 		else {
 			$SQL = "INSERT INTO exercises (title, description) VALUES (\"$name\", \"$desc\")";
