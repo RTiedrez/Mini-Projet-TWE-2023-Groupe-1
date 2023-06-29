@@ -26,7 +26,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
   }
   if (empty($listExercices))
   {
-    echo "<h2>No exercices found</h2><br>";
+    echo "<h2>No exercises found</h2><br>";
   }
   ?>
 </div>
@@ -35,7 +35,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 <?php
 $i=1;
-$title_exercice="NO EXERCICE FOUND";
+$title_exercice="NO EXERCISES FOUND";
 $duration="00:00:00";
 $listexercices = getListExercices($idUser);
 if (empty(getListExercices($idUser))){
