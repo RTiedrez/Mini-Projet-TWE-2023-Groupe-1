@@ -37,8 +37,13 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 			// Cliquer sur le logo redirige vers l'accueil
 			$("#logo").click(function() {
-			window.location.href = "index.php?view=home";
+				window.location.href = "index.php?view=home";
 			});
+
+
+			$("#menu-image").click(function() {
+        		$("#dropdown").toggle();
+    		});
 
 		});
 	</script>
