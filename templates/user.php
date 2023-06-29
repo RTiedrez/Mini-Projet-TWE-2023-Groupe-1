@@ -19,6 +19,9 @@ $idUser = valider("idUser","SESSION");
     
   </head>
   <style>
+    body {
+      overflow: hidden;
+    }
     .form{
       background-color: black;  
       opacity: 0.8;
@@ -29,6 +32,8 @@ $idUser = valider("idUser","SESSION");
       border-radius: 10px;
       margin: 5px;
       display: inline-block;
+      font-weight: bold;
+      font-size: 18px;
     }
     .page{
       border-radius: 19px;
@@ -71,13 +76,13 @@ if(isset($_POST ['start'])){
  
   foreach ($lastactivity as $activity) {
     $title = $activity['title'];
-    $description = $activity['description'];
-    $image = $activity['fichier'];
+    //$description = $activity['description'];
+    //$image = $activity['fichier'];
     $nbrep = $activity['nbRep'];
     echo "<h2>$title</h2><br>";
-    echo "<label>$description</label><br>";
-    echo "<label>$image</label><br>";
-    echo "<label>$nbrep</label><br>";
+    //echo "<label>$description</label><br>";
+    //echo "<label>$image</label><br>";
+    echo "<label>$nbrep</label><br> reps";
   }
   if (empty($lastactivity)){
     echo "<h2>No exercise has been done yet</h2><br>";
@@ -87,6 +92,7 @@ if(isset($_POST ['start'])){
 </div>
   <div id="coach-user" class="form" >
   <?php
+  echo "Your coach: ";
   if (empty(getCoach($idUser))){
     echo "<h2>You don't have any coach yet.</h2><br>";
   } else {
