@@ -67,9 +67,12 @@ body {
 #liens {
     float: left;
     margin-top: 30px;
+    position: fixed;
+    left: 128px;
 }
 
 .lien {
+    top : 0px;
     font-size: 25px;
     font-weight: bold;
     font-family: "Roboto";
