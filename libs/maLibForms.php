@@ -62,7 +62,7 @@
 			foreach($tab as $exercise) {
 				$t = $exercise["title"];
 				$d = $exercise["description"];
-				$f = $exercise["file"];
+				$f = $exercise["fichier"];
 				$s .= "<p>Exercice : $t</p><hr/>";
 				$s .= "<p>Description : $d</p><hr/>";
 				if ($f != null) {
@@ -91,7 +91,7 @@
 		if ($tab) {
 			$title = $tab["title"];
 			$desc = $tab["description"];
-			$file = $tab["file"];
+			$file = $tab["fichier"];
 		}
 		$s = "<input type=text id=edit-name value=\"$title\"><br/>";
 		$s .= "<textarea id=edit-desc>$desc</textarea>";
