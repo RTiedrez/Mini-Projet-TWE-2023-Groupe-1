@@ -27,31 +27,17 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">	
 	<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="js/jquery-3.7.0.min.js"></script>
+	<script src="js/script.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 
-			// Colorier le lien correspondant à la page active 
-			var url = window.location.href;
-			var page = url.split("view=")[1];
-			if (page == undefined) {
-				page = "home";
-			}
-			$("#"+page).addClass("selected");
+			colorierLiens();
 
-			$("#menu-image").click(function() {
-				$("#dropdown").toggle();
-			});
-
-			// Cliquer sur le logo redirige vers l'accueil
-			$("#logo").click(function() {
-				window.location.href = "index.php?view=home";
-			});
-			
 		});
 	</script>
 
-	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 <!-- **** F I N **** H E A D **** -->
