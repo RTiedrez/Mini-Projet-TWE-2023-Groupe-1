@@ -56,7 +56,7 @@
 			$nameEdit = showNameEdit(false);
 			
 			// Tous les utilisateurs sont libres
-			$SQL1 = "SELECT * FROM users WHERE isCoach = 0";
+			$SQL1 = "SELECT * FROM users WHERE isCoach = 0 AND idCoach = $idCoach";
 			$freeUsers = showSortList(parcoursSel(SQLSelect($SQL1), "login"));
 			
 			// Aucun utilisateur est membre du groupe
@@ -71,8 +71,7 @@
 			// Les utilisateurs libres sont listés
 			$SQL1 = "SELECT u.login FROM users u LEFT JOIN v_user_group g
 						ON u.id = g.idUser
-						WHERE (g.idUser IS NULL or g.nomGroupe <> \"$name\") AND u.isCoach = 0";
-			//-----------------------------------------------------------------------WARNING REQUETE IMPARFAITE
+						WHERE (g.idUser IS NULL or g.nomGroupe <> \"$name\") AND u.isCoach = 0 AND idCoach = $idCoach";
 			$freeUsers = showSortList(parcoursSel(SQLSelect($SQL1), "login"));
 			
 			// Les membres du groupe sont listés
