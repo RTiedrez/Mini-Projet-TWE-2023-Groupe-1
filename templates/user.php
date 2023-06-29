@@ -161,7 +161,7 @@ echo "<label id='title-exercice'>$title_exercice</label>";
 </div>
   <div id="timer" >00:00:00</div>
 <input type="submit" name="start" id="start-workout-button" value="Start">
-<input type="submit" name="stop" id="stop-workout-button" value="Stop">
+<input type="submit" name="stop" id="stop-workout-button" value="Pause">
 <input type="submit" name="skip" id="skip-workout-button" value="Skip">
 <input type="submit" name="next" id="next-workout-button" value="Next">
 </div>
@@ -199,7 +199,6 @@ echo "<label id='title-exercice'>$title_exercice</label>";
 
 
     $( "#start-workout-button" ).on( "click", function() {
-        alert ("<?php echo $i ;?>");
         clearInterval(intervalId);
         intervalId = setInterval(updateTimer, 1000);
     } );

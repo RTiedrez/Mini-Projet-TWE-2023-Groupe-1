@@ -92,7 +92,6 @@ echo "<label id='title-exercice'>$title_exercice</label>";
   var intervalId;
   var seconds = 0;
     $( "#start-workout-button" ).on( "click", function() {
-        alert ("<?php echo $i ;?>");
         clearInterval(intervalId);
         intervalId = setInterval(updateTimer, 1000);
     } );
