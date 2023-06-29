@@ -114,18 +114,7 @@ if(isset($_POST ['start'])){
 // echo getLastActivity(7)[]
 ?>
 </div>
-  <div id="coach-user" class="form" >
-  <?php
-  echo "Your coach: ";
-  if (empty(getCoach($idUser))){
-    echo "<h2>You don't have any coach yet.</h2><br>";
-  } else {
-  $coach=getCoach($idUser)[0]['login'];
-  echo $coach;
-
-  } 
-  ?>
-  </div></div>
+  </div>
   <div id="today-workout" class="form" >
   <?php
       echo "<h1>Today's workout</h1><br>";
@@ -145,7 +134,7 @@ if(isset($_POST ['start'])){
 </div>
 <div id="requete-coach" class="form">
   <?php 
-
+  if (empty(getCoach($idUser))) {
     if(!UserCoach($idUser) && !hasSentRequest($idUser))  {
       echo "<h1>Request a coach</h1><br>";
       echo '<form action=controleur.php method=post name=invitation>';
@@ -156,6 +145,10 @@ if(isset($_POST ['start'])){
       echo "<h1>Request sent</h1><br>";
       echo "<h2>Waiting for coach's answer</h2><br>";
     }
+  } else {
+    echo "<h1>Your coach:</h1><br>";
+    echo "<h2>".getCoach($idUser)[0]['login']."</h2><br>";
+  }
     ?>
 
 
