@@ -178,5 +178,45 @@
 		return $s;
 	}
 
+	// Produit un menu déroulant portant l'attribut name = $nomChampSelect
+
+// Produit les options d'un menu déroulant à partir des données passées en premier paramètre
+// $champValue est le nom des cases contenant la valeur à envoyer au serveur
+// $champLabel est le nom des cases contenant les labels à afficher dans les options
+// $selected contient l'identifiant de l'option à sélectionner par défaut
+// si $champLabel2 est défini, il indique le nom d'une autre case du tableau 
+// servant à produire les labels des options
+
+// exemple d'appel : 
+// $users = listerUtilisateurs("both");
+// mkSelect("idUser",$users,"id","pseudo");
+// TESTER AVEC mkSelect("idUser",$users,"id","pseudo",2,"couleur");
+
+function mkSelect($nomChampSelect, $tabData,$champValue, $champLabel,$selected=false,$champLabel2=false)
+{
+
+	$multiple=""; 
+	if (preg_match('/.*\[\]$/',$nomChampSelect)) $multiple =" multiple =\"multiple\" ";
+
+	echo "<select $multiple name=\"$nomChampSelect\">\n";
+	foreach ($tabData as $data)
+	{
+		$sel = "";	// par défaut, aucune option n'est préselectionnée 
+		// MAIS SI le champ selected est fourni
+		// on teste s'il est égal à l'identifiant de l'élément en cours d'affichage
+		// cet identifiant est celui qui est affiché dans le champ value des options
+		// i.e. $data[$champValue]
+		if ( ($selected) && ($selected == $data[$champValue]) )
+			$sel = "selected=\"selected\"";
+
+		echo "<option $sel value=\"$data[$champValue]\">\n";
+		echo  $data[$champLabel] . "\n";
+		if ($champLabel2) 	// SI on demande d'afficher un second label
+			echo  " ($data[$champLabel2])\n";
+		echo "</option>\n";
+	}
+	echo "</select>\n";
+}
+
 ?>
 

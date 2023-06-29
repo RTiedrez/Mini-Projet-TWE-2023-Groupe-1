@@ -1,4 +1,5 @@
 <!-- Auteur : Oussama Mounajjim -->
+<!-- Petites révisions par Roman Tiedrez -->
 <?php
 
 include_once("maLibSQL.pdo.php");
@@ -58,6 +59,12 @@ function getListExercices($idUser){
 function getListCoach(){
     $SQL="SELECT `login`,id FROM users WHERE isCoach=1 ;";
     $result=parcoursRs(SQLSelect($SQL));
+    return $result;
+}
+
+function hasSentRequest($idUser) {
+    $SQL = "SELECT idUser FROM requests WHERE idUser = '$idUser'";
+    $result = SQLGetChamp($SQL);
     return $result;
 }
 

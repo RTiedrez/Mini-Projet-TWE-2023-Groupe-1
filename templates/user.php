@@ -1,8 +1,11 @@
 <!-- Auteur : Oussama Mounajjim -->
+<!-- Petites révisions par Roman Tiedrez -->
+
 <style src="css/style.css"></style>
 
 <?php
 include_once("libs/user_functions.php");
+include_once("libs/maLibForms.php");
 
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
@@ -143,57 +146,15 @@ if(isset($_POST ['start'])){
 <div id="requete-coach" class="form">
   <?php 
 
-  // Produit un menu déroulant portant l'attribut name = $nomChampSelect
-
-// Produit les options d'un menu déroulant à partir des données passées en premier paramètre
-// $champValue est le nom des cases contenant la valeur à envoyer au serveur
-// $champLabel est le nom des cases contenant les labels à afficher dans les options
-// $selected contient l'identifiant de l'option à sélectionner par défaut
-// si $champLabel2 est défini, il indique le nom d'une autre case du tableau 
-// servant à produire les labels des options
-
-// exemple d'appel : 
-// $users = listerUtilisateurs("both");
-// mkSelect("idUser",$users,"id","pseudo");
-// TESTER AVEC mkSelect("idUser",$users,"id","pseudo",2,"couleur");
-
-function mkSelect($nomChampSelect, $tabData,$champValue, $champLabel,$selected=false,$champLabel2=false)
-{
-
-	$multiple=""; 
-	if (preg_match('/.*\[\]$/',$nomChampSelect)) $multiple =" multiple =\"multiple\" ";
-
-	echo "<select $multiple name=\"$nomChampSelect\">\n";
-	foreach ($tabData as $data)
-	{
-		$sel = "";	// par défaut, aucune option n'est préselectionnée 
-		// MAIS SI le champ selected est fourni
-		// on teste s'il est égal à l'identifiant de l'élément en cours d'affichage
-		// cet identifiant est celui qui est affiché dans le champ value des options
-		// i.e. $data[$champValue]
-		if ( ($selected) && ($selected == $data[$champValue]) )
-			$sel = "selected=\"selected\"";
-
-		echo "<option $sel value=\"$data[$champValue]\">\n";
-		echo  $data[$champLabel] . "\n";
-		if ($champLabel2) 	// SI on demande d'afficher un second label
-			echo  " ($data[$champLabel2])\n";
-		echo "</option>\n";
-	}
-	echo "</select>\n";
-}
-  echo "<h1>Request a coach</h1><br>";
-    if(!UserCoach($idUser)) {
+    if(!UserCoach($idUser) && !hasSentRequest($idUser))  {
+      echo "<h1>Request a coach</h1><br>";
       echo '<form action=controleur.php method=post name=invitation>';
       mkSelect("idCoach",getListCoach(),"id","login");
       echo "</select><br><br>";
-      echo "<input type=\"submit\" name=\"action\" value=\"Send\"></form>";   
-/*       if(isset($_POST['invitation'])){
-        $idCoach=$_POST['invitation'];
-        echo("<script>alert($idCoach)</script>");
-        // SendInvitation($idUser,$idCoach);
-      }  */
-      
+      echo "<input type=\"submit\" name=\"action\" value=\"Send\"></form>";
+    } else if (hasSentRequest($idUser)) {
+      echo "<h1>Request sent</h1><br>";
+      echo "<h2>Waiting for coach's answer</h2><br>";
     }
     ?>
 
