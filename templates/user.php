@@ -143,20 +143,20 @@ if(isset($_POST ['start'])){
 <div id="requete-coach" class="form">
   <?php 
   echo "<h1>Request a coach</h1><br>";
-    if(!UserCoach($idUser)){
-      echo '<form method="post"><select name="invitation">';
+    if(!UserCoach($idUser)) {
+      echo '<form method=\"post\"><select name=\"invitation\">';
       $listCoachs=getListCoach();
-      foreach( $listCoachs as $coach){
+      foreach($listCoachs as $coach) {
         $name_coach=$coach['login'];
         echo "<option >$name_coach</option>";
       }
       echo "</select><br><br>";
-      echo "<input type='submit' name='invitation'></form>";   
-      if(isset($_POST['invitation'])){
+      echo "<input type=button name=action value=Send></form>";   
+/*       if(isset($_POST['invitation'])){
         $idCoach=$_POST['invitation'];
         echo("<script>alert($idCoach)</script>");
         // SendInvitation($idUser,$idCoach);
-      } 
+      }  */
       
     }
     ?>

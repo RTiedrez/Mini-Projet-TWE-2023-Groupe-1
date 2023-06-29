@@ -58,7 +58,7 @@ function getListExercices($idUser){
 
 
 function getListCoach(){
-    $SQL="SELECT login FROM users WHERE isCoach=1 ;";
+    $SQL="SELECT `login` FROM users WHERE isCoach=1 ;";
     $result=parcoursRs(SQLSelect($SQL));
     return $result;
 }
