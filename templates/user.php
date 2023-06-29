@@ -76,7 +76,6 @@ $idUser = valider("idUser","SESSION");
       height: 200px;
       overflow: auto;
     }
-    #la
   </style>
 <?php 
 if(isset($_POST ['start'])){
