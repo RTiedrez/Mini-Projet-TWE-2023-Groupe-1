@@ -31,18 +31,18 @@ CREATE TABLE `exercises` (
   `id` int NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `file` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'Un lien vers un fichier vidéo ou image qui décrit l''exercice'
+  `fichier` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'Un lien vers un fichier vidéo ou image qui décrit l''exercice'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `exercises`
 --
 
-INSERT INTO `exercises` (`id`, `title`, `description`, `file`) VALUES
+INSERT INTO `exercises` (`id`, `title`, `description`, `fichier`) VALUES
 (1, 'Jumping jacks', 'This dynamic full-body exercise is a popular warm-up that increases body temperature, aerobic capacity, and strength.', NULL),
 (2, 'Bicycle crunch', 'The bicycle crunch is a dynamic exercise that strengthens the core, lower abdominals, and lower back. The movement also improves stability, balance and coordination.', NULL),
 (3, 'Barbell deadlift', 'The barbell deadlift builds total-body strength by targeting the lower back, hamstrings, quads, and glutes. The exercise also increases core strength and stability.', NULL),
-(4, 'Plank', 'The plank is a basic bodyweight exercise that strengthens the core as well as the upper and lower body muscle groups. This isometric training exercise builds a full-body foundation while also improving joint stability.', NULL),
+(4, 'Plank', 'The plank is a basic bodyweight exercise that strengthens the core as well as the upper and lower body muscle groupes. This isometric training exercise builds a full-body foundation while also improving joint stability.', NULL),
 (5, 'Pull up', 'The pull-up is a challenging bodyweight movement that develops the entire back while strengthening the biceps, forearms, and core. The pull-up also increases stability throughout the shoulders. To ensure full back engagement, start each rep from a dead hang (arms fully extended) and pull your elbows into your ribcage and squeeze your lats as you pull your body up.', NULL),
 (6, 'Barbell back squat', 'The back squat is a basic barbell strength exercise for the lower body with an emphasis on the quads, hamstrings, and glutes. The exercise also strengthens the entire core. The squat allows for heavy weights and overloads your entire body, which has been shown to increase testosterone and growth hormone, making it one of the best mass building exercises.', NULL),
 (7, 'Dumbbell lying triceps extension', 'Dumbbell lying triceps extensions increase strength in the triceps. Performing the exercise with dumbbells will achieve muscular balance on both sides of the body.', NULL),
@@ -56,20 +56,20 @@ INSERT INTO `exercises` (`id`, `title`, `description`, `file`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `groups`
+-- Table structure for table `groupes`
 --
 
-CREATE TABLE `groups` (
+CREATE TABLE `groupes` (
   `id` int NOT NULL,
   `idCoach` int NOT NULL,
   `name` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `groups`
+-- Dumping data for table `groupes`
 --
 
-INSERT INTO `groups` (`id`, `idCoach`, `name`) VALUES
+INSERT INTO `groupes` (`id`, `idCoach`, `name`) VALUES
 (1, 3, 'Profs'),
 (3, 1, 'Beginners');
 
@@ -194,10 +194,10 @@ INSERT INTO `user_group` (`id`, `idUser`, `idGroup`) VALUES
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_groups`
+-- Stand-in structure for view `v_groupes`
 -- (See below for the actual view)
 --
-CREATE TABLE `v_groups` (
+CREATE TABLE `v_groupes` (
 `id` int
 ,`idCoach` int
 ,`name` varchar(32)
@@ -278,7 +278,7 @@ CREATE TABLE `v_workout_exercise` (
 ,`name` varchar(32)
 ,`title` varchar(64)
 ,`description` text
-,`file` varchar(256)
+,`fichier` varchar(256)
 ,`idCoach` int
 ,`login` varchar(16)
 );
@@ -336,11 +336,11 @@ INSERT INTO `workout_exercise` (`id`, `idWorkout`, `idExercise`, `duration`, `po
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_groups`
+-- Structure for view `v_groupes`
 --
-DROP TABLE IF EXISTS `v_groups`;
+DROP TABLE IF EXISTS `v_groupes`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_groups`  AS SELECT `g`.`id` AS `id`, `g`.`idCoach` AS `idCoach`, `g`.`name` AS `name`, `u`.`login` AS `login` FROM (`groups` `g` join `users` `u` on((`g`.`idCoach` = `u`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_groupes`  AS SELECT `g`.`id` AS `id`, `g`.`idCoach` AS `idCoach`, `g`.`name` AS `name`, `u`.`login` AS `login` FROM (`groupes` `g` join `users` `u` on((`g`.`idCoach` = `u`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -367,7 +367,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_user_group`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_user_group`  AS SELECT `ug`.`id` AS `id`, `ug`.`idUser` AS `idUser`, `ug`.`idGroup` AS `idGroup`, `u`.`login` AS `login`, `g`.`name` AS `nomGroupe` FROM ((`user_group` `ug` join `users` `u` on((`ug`.`idUser` = `u`.`id`))) join `groups` `g` on((`ug`.`idGroup` = `g`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_user_group`  AS SELECT `ug`.`id` AS `id`, `ug`.`idUser` AS `idUser`, `ug`.`idGroup` AS `idGroup`, `u`.`login` AS `login`, `g`.`name` AS `nomGroupe` FROM ((`user_group` `ug` join `users` `u` on((`ug`.`idUser` = `u`.`id`))) join `groupes` `g` on((`ug`.`idGroup` = `g`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -385,7 +385,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_workout_exercise`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_workout_exercise`  AS SELECT `we`.`id` AS `id`, `we`.`idWorkout` AS `idWorkout`, `we`.`idExercise` AS `idExercise`, `we`.`duration` AS `duration`, `we`.`position` AS `position`, `w`.`name` AS `name`, `e`.`title` AS `title`, `e`.`description` AS `description`, `e`.`file` AS `file`, `u`.`id` AS `idCoach`, `u`.`login` AS `login` FROM (((`workout_exercise` `we` join `workouts` `w` on((`we`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`we`.`idExercise` = `e`.`id`))) join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_workout_exercise`  AS SELECT `we`.`id` AS `id`, `we`.`idWorkout` AS `idWorkout`, `we`.`idExercise` AS `idExercise`, `we`.`duration` AS `duration`, `we`.`position` AS `position`, `w`.`name` AS `name`, `e`.`title` AS `title`, `e`.`description` AS `description`, `e`.`fichier` AS `fichier`, `u`.`id` AS `idCoach`, `u`.`login` AS `login` FROM (((`workout_exercise` `we` join `workouts` `w` on((`we`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`we`.`idExercise` = `e`.`id`))) join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
 
 --
 -- Indexes for dumped tables
@@ -398,9 +398,9 @@ ALTER TABLE `exercises`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `groups`
+-- Indexes for table `groupes`
 --
-ALTER TABLE `groups`
+ALTER TABLE `groupes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idCoach` (`idCoach`);
 
@@ -470,9 +470,9 @@ ALTER TABLE `exercises`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `groups`
+-- AUTO_INCREMENT for table `groupes`
 --
-ALTER TABLE `groups`
+ALTER TABLE `groupes`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
@@ -522,16 +522,16 @@ ALTER TABLE `workout_exercise`
 --
 
 --
--- Constraints for table `groups`
+-- Constraints for table `groupes`
 --
-ALTER TABLE `groups`
-  ADD CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`idCoach`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `groupes`
+  ADD CONSTRAINT `groupes_ibfk_1` FOREIGN KEY (`idCoach`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `group_workout`
 --
 ALTER TABLE `group_workout`
-  ADD CONSTRAINT `group_workout_ibfk_1` FOREIGN KEY (`idGroup`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `group_workout_ibfk_1` FOREIGN KEY (`idGroup`) REFERENCES `groupes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `group_workout_ibfk_2` FOREIGN KEY (`idWorkout`) REFERENCES `workouts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -554,7 +554,7 @@ ALTER TABLE `requests`
 --
 ALTER TABLE `user_group`
   ADD CONSTRAINT `user_group_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_group_ibfk_2` FOREIGN KEY (`idGroup`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_group_ibfk_2` FOREIGN KEY (`idGroup`) REFERENCES `groupes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `workouts`
