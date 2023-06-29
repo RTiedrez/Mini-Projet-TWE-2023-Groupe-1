@@ -16,7 +16,7 @@ function getGroup($idUser){
 
 function getWorkouts($idUser){
     $idGroup = getGroup($idUser)[0]['idGroup'];
-    $SQL = "SELECT idWorkout FROM group_workout WHERE date < CURDATE() and idGroup = $idGroup";
+    $SQL = "SELECT idWorkout FROM group_workout WHERE date < CURDATE() AND idGroup = $idGroup";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }
@@ -40,7 +40,7 @@ function UserCoach($idUser){
 function getCoach($idUser){
     if (empty(getGroup($idUser))) return [];
     $idGroup=getGroup($idUser)[0]['idGroup'];
-    $SQL = "SELECT users.login FROM users, `groupes` WHERE `groupes`.id = $idGroup and users.isCoach = 1 and users.id = `groupes`.idCoach";
+    $SQL = "SELECT users.login FROM users, `groupes` WHERE `groupes`.id = $idGroup and users.isCoach = 1 AND users.id = `groupes`.idCoach";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }
@@ -64,7 +64,7 @@ function getListCoach(){
 }
 
 function SendInvitation($idUser,$idCoach){
-    $SQL = "INSERT into requests (idUser, idCoach) values ($idUser,$idCoach);";
+    $SQL = "INSERT INTO requests (idUser, idCoach) VALUES ($idUser,$idCoach);";
     return SQLInsert($SQL);
 }
 // print_r(getListExercices($idUser));
