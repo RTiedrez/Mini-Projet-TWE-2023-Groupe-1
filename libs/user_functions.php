@@ -44,12 +44,12 @@ function getCoach($idUser){
 
 function getListExercices($idUser){
     $idGroup = getGroup($idUser)[0]['idGroup'];
-    $SQL = "SELECT exercises.title, workout_exercise.duration FROM exercises, `workout_exercise`, `group_workout` WHERE group_workout.date > CURDATE() and group_workout.idWorkout = workout_exercise.idWorkout and workout_exercise.idExercise = exercises.id and group_workout.idGroup = $idGroup";
+    $SQL = "SELECT exercises.title, workout_exercise.duration FROM exercises, `workout_exercise`, `group_workout` WHERE group_workout.date < CURDATE() and group_workout.idWorkout = workout_exercise.idWorkout and workout_exercise.idExercise = exercises.id and group_workout.idGroup = $idGroup";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }
 
-print_r(getListExercices($idUser));
+// print_r(getListExercices($idUser));
 
 
 ?>

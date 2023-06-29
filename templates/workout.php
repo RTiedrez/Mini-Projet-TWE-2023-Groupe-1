@@ -1,114 +1,6 @@
-<?php
-// $idUser=$_SESSION['user'];
-$idUser=7;
-$username="roben";
-include_once("../libs/user_functions.php");
 
 
-?>
-<!DOCTYPE html>
-<html>
-  <head>
-    
-  </head>
-  <style>
-      body {
-      font-family: "Roboto";
-      background-image: url('../ressources/background.jpg');
-      background-position: top center;
-      padding:30px;
-    }
 
-    .form{
-      background-color: black;  
-      opacity: 0.8;
-      color: white;
-      width: 400px;
-      padding: 50px;
-      text-align: center;
-      border-radius: 10px;
-      margin: 5px;
-    }
-    .page{
-      border-radius: 19px;
-    }
-
-    #dashboard-user{
-      display: block;
-    }
-    #workout-user{
-      display: none;
-    }
-    #exercice-page{
-      display: none;
-    }
-    #title-page-user{
-      color: white; 
-  
-    }
-  </style>
-<?php 
-if(isset($_POST ['start'])){
-  $i=$i+1;
-  $title_exercice= $listexercices[$i]['title'];
-  $duration=$listexercices[$i]['duration'];
-}
-?>
-
-<body>
-
-  <input type="button" id="to_dashboard" value="dashboard" onclick="to_dashboard()">
-  <input type="button" id="to_workout" value="workout" onclick="to_workout()">
-
-<div id="dashboard-user" class="page">
-  <center><h1 id="title-page-user" ><?php echo "Welcome $username "; ?></h1>
-  <div id="division">
-  <div>
-  <div id="last-week-activity"  class="form"  >
-<?php 
-  $lastactivity = getLastActivity($idUser);
- 
-  foreach ($lastactivity as $activity) {
-    $title = $activity['title'];
-    $description = $activity['description'];
-    $image = $activity['file'];
-    $nbrep = $activity['nbRep'];
-    echo "<h2>$title</h2><br>";
-    echo "<label>$description</label><br>";
-    echo "<label>$image</label><br>";
-    echo "<label>$nbrep</label><br>";
-  }
-  if (empty($lastactivity)){
-    echo "<h2>No exercice has been done yet</h2><br>";
-}
-// echo getLastActivity(7)[]
-?>
-</div>
-  <div id="coach-user" class="form" >
-  <?php
-  $coach=getCoach($idUser)[0]['login'];
-  if (empty($coach)){
-    echo "<h2>You don't have any coach yet.</h2><br>";
-}
-  echo $coach;
-  ?>
-  </div></div>
-  <div id="today-workout" class="form" >
-  <?php
-  $workouts_of_theday=getListExercices($idUser);
-  if (empty($workouts_of_theday)){
-    echo "<h2>No exercice has been found, please contact your coach </h2><br>";
-  }
-  else{
-    foreach ($workouts_of_theday as $workout){
-      $title_woork = $workout['title'];
-      $duration_woork = $workout['duration'];
-      echo "<li>$title_woork DURATION: $duration_woork</li><br>";
-    }
-  }
-  ?>
-</div></div>
-</div>
 <center>
 <div id="workout-user"  class="form">
 <h1 id="title-page-workout"> WORKOUT </h1>
@@ -191,11 +83,6 @@ echo "<label id='title-exercice'>$title_exercice</label>";
   var timerDisplay = document.getElementById("timer");
   var intervalId;
   var seconds = 0;
-
-
-
-
-
     $( "#start-workout-button" ).on( "click", function() {
         alert ("<?php echo $i ;?>");
         clearInterval(intervalId);
