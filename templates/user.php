@@ -1,9 +1,14 @@
-<?php
-// $idUser=$_SESSION['user'];
-$idUser=7;
-$username="roben";
-include_once("../libs/user_functions.php");
+<!-- Auteur : Oussama Mounajjim -->
+<style src="css/style.css"></style>
 
+<?php
+include_once("libs/user_functions.php");
+
+if (basename($_SERVER["PHP_SELF"]) != "index.php")
+{
+	header("Location:../index.php?view=user");
+	die("");
+}
 
 ?>
 <!DOCTYPE html>
@@ -12,13 +17,6 @@ include_once("../libs/user_functions.php");
     
   </head>
   <style>
-      body {
-      font-family: "Roboto";
-      background-image: url('../ressources/background.jpg');
-      background-position: top center;
-      padding:30px;
-    }
-
     .form{
       background-color: black;  
       opacity: 0.8;
@@ -61,7 +59,7 @@ if(isset($_POST ['start'])){
   <input type="button" id="to_workout" value="workout" onclick="to_workout()">
 
 <div id="dashboard-user" class="page">
-  <center><h1 id="title-page-user" ><?php echo "Welcome $username "; ?></h1>
+  <center><h1 id="title-page-user" ><?php echo "Welcome "; ?></h1>
   <div id="division">
   <div>
   <div id="last-week-activity"  class="form"  >
@@ -71,7 +69,7 @@ if(isset($_POST ['start'])){
   foreach ($lastactivity as $activity) {
     $title = $activity['title'];
     $description = $activity['description'];
-    $image = $activity['file'];
+    $image = $activity['fichier'];
     $nbrep = $activity['nbRep'];
     echo "<h2>$title</h2><br>";
     echo "<label>$description</label><br>";

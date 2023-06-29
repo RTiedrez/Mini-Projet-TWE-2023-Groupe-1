@@ -25,7 +25,7 @@ function getWorkouts($idUser){
 // print_r(getWorkouts($idUser));
 
 function getLastActivity($idUser){
-    $SQL = "SELECT title, description, file, nbRep FROM exercises, performances WHERE exercises.id = idExercice and idUser = $idUser and date < CURDATE() LIMIT 3";
+    $SQL = "SELECT title, description, fichier, nbRep FROM exercises, performances WHERE exercises.id = idExercice and idUser = $idUser and date < CURDATE() LIMIT 3";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }
@@ -35,7 +35,7 @@ function getLastActivity($idUser){
 
 function getCoach($idUser){
     $idGroup=getGroup($idUser)[0]['idGroup'];
-    $SQL = "SELECT users.login FROM users, `groups` WHERE `groups`.id = $idGroup and users.isCoach = 1 and users.id = `groups`.idCoach";
+    $SQL = "SELECT users.login FROM users, `groupes` WHERE `groupes`.id = $idGroup and users.isCoach = 1 and users.id = `groupes`.idCoach";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }

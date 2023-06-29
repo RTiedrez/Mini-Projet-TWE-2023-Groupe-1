@@ -1,5 +1,13 @@
+<!-- Auteur : Oussama Mounajjim -->
+<style src="css/style.css"></style>
 
-
+<?php
+if (basename($_SERVER["PHP_SELF"]) != "index.php")
+{
+	header("Location:../index.php?view=workout");
+	die("");
+}
+?>
 
 <center>
 <div id="workout-user"  class="form">
@@ -27,7 +35,7 @@
 
 <?php
 $i=1;
-$title_exercice="NO EXERCICE IS FOUNDED";
+$title_exercice="NO EXERCICE FOUND";
 $duration="00:00:00";
 $listexercices = getListExercices($idUser);
 if (empty(getListExercices($idUser))){
