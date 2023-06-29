@@ -5,6 +5,7 @@ Importez la base de données bdd.sql sur phpMyAdmin.
 Décompressez cette archive dans un dossier de votre serveur Apache2.
 Ouvrez votre navigateur et rendez-vous à l'adresse localhost/chemin/vers/le/dossier/du/projet.
 Il vous faut renseigner les identifiants associés à votre installation MySQL dans le fichier libs/config.php.
+Toutes les permissions de lecture et d'écriture doivent être accordées au dossier du projet.
 
 ## Tests ##
 

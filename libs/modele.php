@@ -2,7 +2,7 @@
 
 /*
 Dans ce fichier, on définit diverses fonctions permettant de récupérer des données utiles pour notre TP d'identification. Deux parties sont à compléter, en suivant les indications données dans le support de TP
-*/
+ (chmod +rw)*/
 
 
 /********* EXERCICE 2 : prise en main de la base de données *********/
