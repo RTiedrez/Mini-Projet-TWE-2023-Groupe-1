@@ -55,18 +55,12 @@ function getListExercices($idUser){
     return $result;
 }
 
-
-
 function getListCoach(){
     $SQL="SELECT `login`,id FROM users WHERE isCoach=1 ;";
     $result=parcoursRs(SQLSelect($SQL));
     return $result;
 }
 
-function SendInvitation($idUser,$idCoach){
-    $SQL = "INSERT INTO requests (idUser, idCoach) VALUES ($idUser,$idCoach);";
-    return SQLInsert($SQL);
-}
 // print_r(getListExercices($idUser));
 
 
