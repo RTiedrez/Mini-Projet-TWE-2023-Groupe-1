@@ -24,7 +24,7 @@ function getWorkouts($idUser){
 // print_r(getWorkouts($idUser));
 
 function getLastActivity($idUser){
-    $SQL = "SELECT title, description, fichier, nbRep FROM exercises, performances WHERE exercises.id = idExercice and idUser = $idUser and date < CURDATE() LIMIT 3";
+    $SQL = "SELECT title, description, fichier, nbRep, performances.date FROM exercises, performances WHERE exercises.id = idExercice and idUser = $idUser and date < CURDATE() LIMIT 3";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }

@@ -45,10 +45,38 @@ $idUser = valider("idUser","SESSION");
     #exercice-page{
       display: none;
     }
-    #title-page-user{
+    #title-page-user {
       color: white; 
   
     }
+    #today-workout {
+      width: 400px;
+      height: 200px;
+      overflow: auto;
+    }
+    #today-workout:hover{
+      cursor: pointer;
+    }
+    #today-workout:hover{
+      background-color: white;
+      color: black;
+    }
+    #last-week-activity {
+      width: 400px;
+      height: 200px;
+      overflow: auto;
+    }
+    #coach-user {
+      width: 400px;
+      height: 200px;
+      overflow: auto;
+    }
+    #requete-coach {
+      width: 400px;
+      height: 200px;
+      overflow: auto;
+    }
+    #la
   </style>
 <?php 
 if(isset($_POST ['start'])){
@@ -59,24 +87,21 @@ if(isset($_POST ['start'])){
 ?>
 
 <body>
-
-  <input type="button" id="to_dashboard" value="dashboard" onclick="to_dashboard()">
-  <input type="button" id="to_workout" value="workout" onclick="to_workout()">
-
 <div id="dashboard-user" class="page">
   <center><h1 id="title-page-user" ><?php echo "Welcome "; ?></h1>
   <div id="division">
   <div>
-  <div id="last-week-activity"  class="form"  >
+  <div id="last-week-activity"  class="form" >
 <?php 
+  echo "<h1>History (7 days)</h1><br>";
   $lastactivity = getLastActivity($idUser);
- 
   foreach ($lastactivity as $activity) {
     $title = $activity['title'];
     $description = $activity['description'];
     $image = $activity['fichier'];
     $nbrep = $activity['nbRep'];
-    echo "<h2>$title</h2><br>";
+    $date = $activity['date'];
+    echo "<h2>$title $date</h2><br>";
     //echo "<label>$description</label><br>";
     //echo "<label>$image</label><br>";
     echo "<label>$nbrep</label><br> reps";
@@ -101,17 +126,18 @@ if(isset($_POST ['start'])){
   </div></div>
   <div id="today-workout" class="form" >
   <?php
-  $workouts_of_theday=getListExercices($idUser);
-  if (empty($workouts_of_theday)){
-    echo "<h2>No exercise has been found, please contact your coach </h2><br>";
-  }
-  else{
-    foreach ($workouts_of_theday as $workout){
-      $title_woork = $workout['title'];
-      $duration_woork = $workout['duration'];
-      echo "<li>$title_woork DURATION: $duration_woork</li><br>";
-    }
-  }
+      echo "<h1>Today's workout</h1><br>";
+      $workouts_of_theday=getListExercices($idUser);
+      if (empty($workouts_of_theday)){
+        echo "<h2>No exercise has been found, please contact your coach </h2><br>";
+      }
+      else{
+        foreach ($workouts_of_theday as $workout){
+          $title_woork = $workout['title'];
+          $duration_woork = $workout['duration'];
+          echo "<li>$title_woork DURATION: $duration_woork</li><br>";
+        }
+      }
   ?>
 
 </div>
@@ -199,6 +225,10 @@ echo "<label id='title-exercice'>$title_exercice</label>";
   var workout_page= document.getElementById("workout-user");
   var workout_user=document.getElementById("exercice-page");
 
+  $("#today-workout").on("click", function() {
+    to_workout();
+  });
+
   function to_dashboard() {
     if (dashboard_page.style.display == 'none') {
       workout_user.style.display="none";
@@ -221,10 +251,6 @@ echo "<label id='title-exercice'>$title_exercice</label>";
   var timerDisplay = document.getElementById("timer");
   var intervalId;
   var seconds = 0;
-
-
-
-
 
     $( "#start-workout-button" ).on( "click", function() {
         clearInterval(intervalId);
