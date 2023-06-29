@@ -1,3 +1,10 @@
+<?php
+// $idUser=$_SESSION['user'];
+$idUser=7;
+$username="roben";
+include_once("../libs/user_functions.php")
+
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,7 +15,7 @@
       background-color: black;  
       opacity: 0.8;
       color: wheat;
-      width: 100px;
+      width: 400px;
       padding: 100px;
       text-align: center;
       border-radius: 10px;
@@ -41,23 +48,58 @@
   <input type="button" id="to_workout" value="workout" onclick="to_workout()">
 
 <div id="dashboard-user" class="page">
-  <h1 id="title-page-user" >USER DASHBOARD</h1>
+  <center><h1 id="title-page-user" ><?php echo "Welcome $username "; ?></h1>
+  <div id="division">
+  <div>
   <div id="last-week-activity"  class="form"  >
-    ACTIVITY
-  </div>
-  <div id="coach-user" class="form" >
-    COACH
-  </div>
-  <div id="today-workout" class="form" >
-    WORKOUT OF TODAY
-  </div>
+<?php 
+  $lastactivity = getLastActivity($idUser);
+  foreach ($lastactivity as $activity) {
+    $title = $activity['title'];
+    $description = $activity['description'];
+    $image = $activity['file'];
+    $nbrep = $activity['nbRep'];
+    echo "<h2>$title</h2><br>";
+    echo "<label>$description</label><br>";
+    echo "<label>$image</label><br>";
+    echo "<label>$nbrep</label><br>";
+}
+// echo getLastActivity(7)[]
+?>
 </div>
+  <div id="coach-user" class="form" >
+  <?php
+  $coach=getCoach($idUser)[0]['login'];
+  echo $coach;
+  ?>
+  </div></div>
+  <div id="today-workout" class="form" >
+  <?php
+  $workouts_of_theday=getListExercices($idUser);
+  
+  ?>
+</div></div>
+</div>
+<center>
 <div id="workout-user"  class="page">
 <h1 id="title-page-workout"> WORKOUT </h1>
 <input type="button" id="button-start" value="Start" onclick="to_exercice()">
 
 <div id="list-workout-user" >
-LIST WORKOUT
+<?php
+  $listExercices=getListExercices($idUser);
+  foreach ($listExercices as $exercice)
+  {
+    $title_exercice = $exercice['title'];
+    $duration = $exercice['duration'];
+    echo "<h2>$title_exercice</h2><br>";
+    echo "<label>$duration </label><br>";
+  }
+  if (empty($listExercices))
+  {
+    echo "<h2>No exercices founded</h2><br>";
+  }
+  ?>
 </div>
 </div>
 <div id="exercice-page"  class="form">
