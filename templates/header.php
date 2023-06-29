@@ -61,6 +61,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		if (valider("connecte","SESSION")) {
 			if (!valider("isCoach","SESSION")) {
 				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
+				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=workout\">Workout</a>";
 			} else {
 				echo "<a id=\"coach_dashboard\" class=\"lien\" href=\"index.php?view=coach_dashboard\">Dashboard</a>";
 				echo "<a id=\"coach_exercises\" class=\"lien\" href=\"index.php?view=coach_exercises\">Exercises</a>";
