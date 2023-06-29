@@ -47,9 +47,7 @@ function UserCoach($idUser){
 } */
 
 function getCoach($idUser){
-    $SQL = "SELECT idCoach FROM users WHERE id = '$idUser'";
-    $result = SQLGetChamp($SQL);
-    $SQL= "SELECT `login` FROM users WHERE id = '$result'";
+    $SQL = "SELECT uu.`login` FROM users u, users uu WHERE u.id='$idUser' AND u.idCoach=uu.id;";
     $result = SQLGetChamp($SQL);
     return $result;
 }
