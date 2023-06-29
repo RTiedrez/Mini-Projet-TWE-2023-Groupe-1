@@ -38,10 +38,16 @@ function UserCoach($idUser){
     }
     return False;
 }
-function getCoach($idUser){
+/* function getCoach($idUser){
     if (empty(getGroup($idUser))) return [];
     $idGroup=getGroup($idUser)[0]['idGroup'];
     $SQL = "SELECT users.login FROM users, `groupes` WHERE `groupes`.id = $idGroup and users.isCoach = 1 AND users.id = `groupes`.idCoach";
+    $result = parcoursRs(SQLSelect($SQL));
+    return $result;
+} */
+
+function getCoach($idUser){
+    $SQL = "SELECT idCoach, `login` FROM users WHERE id = '$idUser'";
     $result = parcoursRs(SQLSelect($SQL));
     return $result;
 }

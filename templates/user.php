@@ -134,8 +134,8 @@ if(isset($_POST ['start'])){
 </div>
 <div id="requete-coach" class="form">
   <?php 
-  if (empty(getCoach($idUser))) {
-    if(!UserCoach($idUser) && !hasSentRequest($idUser))  {
+    if(!getCoach($idUser)) {
+     if(!hasSentRequest($idUser)){
       echo "<h1>Request a coach</h1><br>";
       echo '<form action=controleur.php method=post name=invitation>';
       mkSelect("idCoach",getListCoach(),"id","login");
@@ -146,9 +146,10 @@ if(isset($_POST ['start'])){
       echo "<h2>Waiting for coach's answer</h2><br>";
     }
   } else {
-    echo "<h1>Your coach:</h1><br>";
+    echo "Your coach: ";
     echo "<h2>".getCoach($idUser)[0]['login']."</h2><br>";
   }
+
     ?>
 
 
