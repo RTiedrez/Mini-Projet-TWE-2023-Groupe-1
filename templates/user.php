@@ -76,8 +76,8 @@ if(isset($_POST ['start'])){
  
   foreach ($lastactivity as $activity) {
     $title = $activity['title'];
-    //$description = $activity['description'];
-    //$image = $activity['fichier'];
+    $description = $activity['description'];
+    $image = $activity['fichier'];
     $nbrep = $activity['nbRep'];
     echo "<h2>$title</h2><br>";
     //echo "<label>$description</label><br>";
