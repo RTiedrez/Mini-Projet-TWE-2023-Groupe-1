@@ -63,7 +63,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				echo "<a id=\"user\" class=\"lien\" href=\"index.php?view=user\">Dashboard</a>";
 			} else {
 				echo "<a id=\"coach_dashboard\" class=\"lien\" href=\"index.php?view=coach_dashboard\">Dashboard</a>";
-				echo "<a id=\"coach_exercices\" class=\"lien\" href=\"index.php?view=coach_exercices\">Exercices</a>";
+				echo "<a id=\"coach_exercices\" class=\"lien\" href=\"index.php?view=coach_exercises\">Exercices</a>";
 				echo "<a id=\"coach_workouts\" class=\"lien\" href=\"index.php?view=coach_workouts\">Workouts</a>";
 				echo "<a id=\"coach_groups\" class=\"lien\" href=\"index.php?view=coach_groups\">Groups</a>";
 				echo "<a id=\"coach_requests\" class=\"lien\" href=\"index.php?view=coach_requests\">Requests</a>";

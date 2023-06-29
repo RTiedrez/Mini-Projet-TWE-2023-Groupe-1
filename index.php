@@ -32,12 +32,24 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 			include("templates/home.php");
 		break;
 
-		case "signin" : 
-			include("templates/signin.php");
-		break; 
+		case "coach_dashboard" : 
+			include("templates/coach_dashboard.php");
+		break;
 
-		case "signup":
-			include("templates/signup.php");
+		case "coach_exercices" : 
+			include("templates/coach_exercises.php");
+		break;
+		
+		case "coach_workouts" : 
+			include("templates/coach_workouts.php");
+		break;
+		
+		case "coach_groups" : 
+			include("templates/coach_groups.php");
+		break;
+		
+		case "coach_requests" : 
+			include("templates/coach_requests.php");
 		break;
 
 		default : // si le template correspondant à l'argument existe, on l'affiche
