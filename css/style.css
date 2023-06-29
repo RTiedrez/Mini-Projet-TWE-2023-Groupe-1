@@ -1,9 +1,17 @@
 /* Classes générales */
-.rounded-box{
+body {
+    background-image: url("../ressources/background.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+
+}
+
+.rounded-box {
     border-radius: 17px;
 }
 
-.form-button{
+.form-button {
     border-radius: 17px;
     padding: 1px;
     font-size: 30px;
