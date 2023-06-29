@@ -8,8 +8,4 @@ function colorierLiens() {
     }
     $("#"+page).addClass("selected");
 
-    $("#menu-image").click(function() {
-        $("#dropdown").toggle();
-    });
-
 }
