@@ -153,14 +153,18 @@ if(isset($_POST ['start'])){
     $description = $activity['description'];
     $image = $activity['fichier'];
     $nbrep = $activity['nbRep'];
-
+    $date = $activity['date'];
 
     if(!empty($title)){
-      echo "<h2><label class='titre'></label> $title</h2><br>";
+      echo "<h2><label class='titre'></label> $title</h2>";
+    }
+
+    if(!empty($date)){
+      echo "<h2><label class='titre'></label> $date</h2><br>";
     }
 
     /* if(!empty($description)){
-      echo "<label><label class='titre'>Workout's Desciption:</label> $description</label><br>";
+      echo "<label><label class='titre'>Workout's Description:</label> $description</label><br>";
     }
 
     if(!empty($image)){
@@ -170,6 +174,7 @@ if(isset($_POST ['start'])){
     if(!empty($nbrep)){
       echo "<label><label class='titre'>Your reps:</label> $nbrep</label><br>";
     }
+    
 
   }
 
