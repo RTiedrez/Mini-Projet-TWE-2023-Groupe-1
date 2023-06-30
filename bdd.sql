@@ -385,7 +385,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW
 --
 DROP TABLE IF EXISTS `v_workout_exercise`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_workout_exercise`  AS SELECT `we`.`id` AS `id`, `we`.`idWorkout` AS `idWorkout`, `we`.`idExercise` AS `idExercise`, `we`.`duration` AS `duration`, `we`.`position` AS `position`, `w`.`name` AS `name`, `e`.`title` AS `title`, `e`.`description` AS `description`, `e`.`fichier` AS `fichier`, `u`.`id` AS `idCoach`, `u`.`login` AS `login` FROM (((`workout_exercise` `we` join `workouts` `w` on((`we`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`we`.`idExercise` = `e`.`id`))) join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`localhost` SQL SECURITY DEFINER VIEW `v_workout_exercise`  AS SELECT `we`.`id` AS `id`, `we`.`idWorkout` AS `idWorkout`, `we`.`idExercise` AS `idExercise`, `we`.`duration` AS `duration`, `we`.`position` AS `position`, `w`.`name` AS `name`, `e`.`title` AS `title`, `e`.`description` AS `description`, `e`.`fichier` AS `fichier`, `u`.`id` AS `idCoach`, `u`.`login` AS `login`, `e` . `title` AS `nomExercice` FROM (((`workout_exercise` `we` join `workouts` `w` on((`we`.`idWorkout` = `w`.`id`))) join `exercises` `e` on((`we`.`idExercise` = `e`.`id`))) join `users` `u` on((`w`.`idCoach` = `u`.`id`))) ;
 
 --
 -- Indexes for dumped tables
