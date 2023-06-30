@@ -72,5 +72,4 @@ function hasSentRequest($idUser) {
     $result = SQLGetChamp($SQL);
     return $result;
 }
-
 ?>
